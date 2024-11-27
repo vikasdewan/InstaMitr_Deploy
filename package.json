@@ -2,12 +2,12 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "Backend/index.js",
+  "main": "backend/index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon Backend/index.js",
+    "dev": "nodemon backend/index.js",
     "build": "npm install && npm install --prefix Frontend && npm run build --prefix Frontend",
-    "start": "nodemon Backend/index.js"
+    "start": "nodemon backend/index.js"
   },
   "keywords": [],
   "author": "",
