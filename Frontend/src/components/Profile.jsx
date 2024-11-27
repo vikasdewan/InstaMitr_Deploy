@@ -140,7 +140,7 @@ function Profile() {
                   <AtSign className="size-4" />
                   <span>{userProfile?.username}</span>
                 </Badge>
-                <span>MERN Stack💻 | DSA in JAVA🖥️ </span>
+                {/* <span>MERN Stack💻 | DSA in JAVA🖥️ </span> */}
               </div>
             </div>
           </section>
