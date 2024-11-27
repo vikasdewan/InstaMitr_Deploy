@@ -8,8 +8,6 @@ import {
   AtSign,
   Bookmark,
   Grid,
-  Heart,
-  MessageCircle,
   MoreHorizontal,
   PlaySquare,
   Plus,
