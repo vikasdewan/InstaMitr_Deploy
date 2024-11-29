@@ -20,7 +20,7 @@ import { Badge } from "./ui/badge";
 import { FaComment, FaHeart,   } from "react-icons/fa";
 import { toast } from "sonner";
 import axios from "axios";
-import { setAuthUser,setSuggestedUsers} from "@/redux/authSlice";
+import { setAuthUser,setSuggestedUsers, setUserProfile} from "@/redux/authSlice";
 import { setSelectedUser } from "@/redux/chatSlice";
 
 function Profile() {
@@ -66,11 +66,22 @@ function Profile() {
       );
 
       if (response.data.success) {
+        //to update the loggedIn user
         const updatedFollowing = isFollowing
         ? user?.following.filter((id) => id !== userProfile?._id)
         : [...user.following, userProfile?._id]
 
-        //update the suggested user for various places in code and app
+        dispatch(setAuthUser({ ...user, following: updatedFollowing }));
+        
+        //to update the profile user
+        const updatedFollowers = isFollowing
+        ? userProfile?.followers.filter((id) => id !== user?._id) // Remove follower
+        : [...userProfile?.followers, user?._id]; // Add follower
+
+        dispatch(setUserProfile({...userProfile, followers:updatedFollowers}))
+        
+
+        //update the suggested user list for various places in code and app
         const updatedSuggestedUsers = suggestedUsers.map((suggUser) =>
           suggUser?._id === userProfile?._id
             ? {
@@ -84,7 +95,6 @@ function Profile() {
        dispatch(setSuggestedUsers(updatedSuggestedUsers)) // upto date with the suggested Users
 
 
-      dispatch(setAuthUser({ ...user, following: updatedFollowing }));
         setIsFollowing((prev) => !prev); // Toggle following state
         toast.success(response.data.message); // Success toast
       }
