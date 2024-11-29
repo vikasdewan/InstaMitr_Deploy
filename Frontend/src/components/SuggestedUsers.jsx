@@ -38,7 +38,7 @@ function SuggestedUsers() {
       console.log(response);
       if (response.data.success) {
 
-        const updatedUsers = suggestedUsers.map((suggUser) =>
+        const updatedSuggestedUser = suggestedUsers.map((suggUser) =>
           suggUser._id === suggUserId
             ? {
                 ...suggUser,
@@ -49,7 +49,7 @@ function SuggestedUsers() {
             : suggUser
         );
          
-        dispatch(setSuggestedUsers(updatedUsers));
+        dispatch(setSuggestedUsers(updatedSuggestedUser));
 
         const updatedFollowing =  [...user.following, suggUserId];
 
