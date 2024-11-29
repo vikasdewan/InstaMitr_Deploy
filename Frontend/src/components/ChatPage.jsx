@@ -6,6 +6,7 @@ import { MessageCircleIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Messages } from "./Messages";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 export const ChatPage = () => {
   const [textMessage, setTextMessage] = useState("");
@@ -15,6 +16,7 @@ export const ChatPage = () => {
   );
 
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const sendMessageHandler = async (recieverId) => {
     try {
@@ -44,6 +46,36 @@ export const ChatPage = () => {
       dispatch(setSelectedUser(null));
     };
   }, []);
+
+  useEffect(() => {
+    if (location.state?.selectedUser) {
+      dispatch(setSelectedUser(location.state.selectedUser));
+    }
+  }, [location.state, dispatch]);
+
+  //using this(below) when a loggedIn user click the message button on the profile page of the user
+  useEffect(() => {
+    const fetchMessages = async () => {
+      if (selectedUser) {
+        try {
+          const res = await axios.get(
+            `http://localhost:8000/api/v1/message/${selectedUser._id}`, // Fetch messages
+            { withCredentials: true }
+          );
+  
+          if (res.data.success) {
+            dispatch(setMessages(res.data.messages)); // Store messages in Redux
+          }
+        } catch (error) {
+          console.error("Failed to load messages:", error);
+        }
+      }
+    };
+  
+    fetchMessages();
+  
+  
+  }, [selectedUser]);
 
   return (
     <div className="ml-48  text-white flex">

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import useGetUserProfile from "@/hooks/useGetUserProfile";
-import { Link, useParams } from "react-router-dom";
+import { Link,useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./ui/button";
 import {
   AtSign,
   Bookmark,
   Grid,
-  Heart,
-  MessageCircle,
+ 
   MoreHorizontal,
   PlaySquare,
   Plus,
@@ -22,17 +21,19 @@ import { FaComment, FaHeart,   } from "react-icons/fa";
 import { toast } from "sonner";
 import axios from "axios";
 import { setAuthUser } from "@/redux/authSlice";
+import { setSelectedUser } from "@/redux/chatSlice";
 
 function Profile() {
   const params = useParams();
   const userId = params.id;
   useGetUserProfile(userId);
   const [activeTab, setActiveTab] = useState("posts");
-
+  const {selectedUser} = useSelector((store) => store.chat);
   const { userProfile,user } = useSelector((store) => store.auth);
   const isLoggedInUserProfile = user?._id === userProfile?._id ;
   const [isFollowing, setIsFollowing] = useState(false);
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -43,12 +44,7 @@ function Profile() {
   }, [userProfile, user]);
 
 
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(()=>{
-    window.scrollTo(0,0);
-    setTimeout(() => setIsVisible(true), 100); 
-  },[]);
+  
 
 
   const displayedPost =
@@ -84,6 +80,10 @@ function Profile() {
     }
   };
 
+  const handleMessage = () =>{
+    console.log("message handler called")
+    navigate("/chat", { state: { selectedUser: userProfile } });
+  }
 
   return (
     <div className="text-white  bg-black flex min-w-[94.8%] justify-center ml-20 pl-10  ">
@@ -129,6 +129,7 @@ function Profile() {
                       Unfollow 
                     </Button>
                     <Button
+                     onClick={handleMessage}
                       className="hover:bg-gray-800 h-8 bg-gray-700 text-white font-semibold"
                       variant="secondary"
                     >
