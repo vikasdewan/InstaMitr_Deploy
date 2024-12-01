@@ -159,7 +159,7 @@ function Profile() {
             )}
           </div>
 
-          <div className="flex flex-row md:flex-col items-center justify-center md:justify-start gap-4 md:gap-9">
+          <div className="flex flex-row   items-center justify-center md:justify-start gap-4 md:gap-9">
             <p>
               <span className="font-semibold pr-1 text-lg">{userProfile?.posts.length}</span> posts
             </p>
