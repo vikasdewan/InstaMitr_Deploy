@@ -90,7 +90,7 @@ export const ChatPage = () => {
   return (
     <div className="text-white flex flex-col md:flex-row md:ml-48 h-screen">
       <section className={`w-full border-b  md:w-1/4 my-8 md:my-0 md:mx-8 ${showChatList ? 'block' : 'hidden'} md:block`}>
-        <h1 className="font-bold mb-8 py-2 px-4 text-2xl">{user?.username}</h1>
+        <h1 className="font-bold mb-8 py-2 px-4 text-2xl border-b ">{user?.username}</h1>
         <div className="overflow-y-auto h-[40vh] md:h-[80vh]">
           {followedUsers.map((suggestedUser) => {
             const isOnline = onlineUsers.includes(suggestedUser?._id);
