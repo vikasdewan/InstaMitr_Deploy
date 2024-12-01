@@ -82,7 +82,7 @@ export function BottomBar() {
           className="flex flex-col items-center cursor-pointer"
         >
           {item.icon}
-          <span className="text-xs">{item.text}</span>
+          {/* <span className="text-xs">{item.text}</span> */}
           {
                 item.text === 'Notifications' && likeNotiList?.length>0 &&(
                   <Popover className="left-0">
