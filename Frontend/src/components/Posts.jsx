@@ -12,7 +12,7 @@ function Posts() {
         <Post key={post._id} post={post} />
       ))}
       <Link to="/suggestedusers">
-        <button className="fixed bottom-20 right-0 transform -translate-x-1/2 bg-red-800 text-white py-3 px-3 mr-4 rounded-full md:hidden">
+        <button className="fixed bottom-20 right-0 transform -translate-x-1/2 bg-red-800 text-white  mr-4 rounded-full md:hidden">
            🙋
         </button>
       </Link>
