@@ -85,9 +85,9 @@ function Profile() {
           suggUser?._id === userProfile?._id
             ? {
                 ...suggUser,
-                followers: suggUser.followers.includes(user._id)
-                  ? suggUser.followers.filter((id) => id !== user._id) // Unfollow
-                  : [...suggUser.followers, user._id], // Follow
+                followers: suggUser.followers.includes(user?._id)
+                  ? suggUser.followers.filter((id) => id !== user?._id) // Unfollow
+                  : [...suggUser.followers, user?._id], // Follow
               }
             : suggUser
         );

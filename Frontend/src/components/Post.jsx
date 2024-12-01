@@ -50,12 +50,12 @@ function Post({ post }) {
         }, 300);
 
         const updatedPostData = posts.map((p) =>
-          p._id === post._id
+          p?._id === post?._id
             ? {
                 ...p,
                 likes: liked
-                  ? p.likes.filter((id) => id !== user._id)
-                  : [...p.likes, user._id],
+                  ? p.likes.filter((id) => id !== user?._id)
+                  : [...p.likes, user?._id],
               }
             : p
         );
@@ -86,7 +86,7 @@ function Post({ post }) {
         setComment(updatedCommentData);
 
         const updatedPostData = posts.map((p) =>
-          p._id === post._id ? { ...p, comments: updatedCommentData } : p
+          p?._id === post?._id ? { ...p, comments: updatedCommentData } : p
         );
 
         dispatch(setPosts(updatedPostData));
