@@ -12,20 +12,19 @@ import { useSelector } from "react-redux";
 
 function Signup() {
   const [input, setInput] = useState({ username: "", password: "", email: "" });
-  const { user } = useSelector((store) => store.auth);
-  
+  const {user} = useSelector(store => store.auth);
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setloading] = useState(false);
   const navigate = useNavigate();
   
   const signupHandler = async (e) => {
     e.preventDefault();
     console.log(input);
     try {
-      setLoading(true);
+      setloading(true);
       const res = await axios.post(
         "https://instamitr-deploy-1.onrender.com/api/v1/user/register",
         input,
@@ -50,90 +49,90 @@ function Signup() {
         email: "",
       });
     } finally {
-      setLoading(false);
+      setloading(false);
     }
   };
 
-  useEffect(() => {
-    if (user) {
+  useEffect(()=>{
+    if(user){
       navigate("/");
     }
-  }, [user, navigate]);
+  },[])
 
   return (
-    <div className="flex items-center w-screen h-screen justify-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white">
+    <div className="flex items-center w-screen h-screen justify-center bg-slate-900 text-white">
       <form
         onSubmit={signupHandler}
-        className="shadow-lg flex flex-col gap-1 bg-black p-7 w-96 rounded-md"
+        className="shadow-white shadow-lg flex flex-col gap-1 p-7 w-96"
       >
         <div className="my-4">
-          <h1 className="text-center font-bold text-2xl text-pink-500">InstaMitr</h1>
-          <p className="pl-2 text-sm text-center font-medium mt-2 text-gray-300">
-            Sign up to see photos and videos from your friends.
+          <h1 className="text-center font-bold text-xl">InstaMitr</h1>
+          <p className="pl-2 text-sm text-center mt-2  font-bold">
+            signup to see photos and videos from your Friends
           </p>
         </div>
         <div>
-          <Label className="font-medium pl-1 text-gray-300">Username</Label>
+          <Label className="font-medium pl-1">Username</Label>
           <Input
             type="text"
-            placeholder="Username"
+            placeholder="username"
             name="username"
             value={input.username}
             onChange={changeEventHandler}
-            className="text-black font-bold focus-visible:ring-transparent my-2 bg-gray-200"
+            className="text-black focus-visible:ring-transparent my-2 bg-slate-200"
           />
         </div>
         <div>
-          <Label className="font-medium pl-1 text-gray-300">Email</Label>
+          <Label className="font-medium pl-1">Email</Label>
           <Input
             type="email"
-            placeholder="Email"
+            placeholder="email"
             name="email"
             value={input.email}
             onChange={changeEventHandler}
-            className="text-black font-bold focus-visible:ring-transparent my-2 bg-gray-200"
+            className="text-black focus-visible:ring-transparent my-2 bg-slate-200"
           />
         </div>
         <div>
-          <Label className="font-medium pl-1 text-gray-300">Password</Label>
+          <Label className="font-medium pl-1">Password</Label>
           <Input
             type="password"
-            placeholder="Password"
+            placeholder="password"
             name="password"
             value={input.password}
             onChange={changeEventHandler}
-            className="text-black font-bold focus-visible:ring-transparent my-2 bg-gray-200"
+            className="text-black focus-visible:ring-transparent my-2 bg-slate-200"
           />
         </div>
 
-        <p className="text-xs text-center text-gray-500">
+        <p className="text-xs text-center text-slate-400">
           People who use our service may have uploaded your contact information
-          to Instagram. <span className="text-blue-500">Learn More</span>
+          to Instagrams. <span className="text-blue-500">Learn More</span>
         </p>
 
-        <p className="text-xs text-center text-gray-500">
+        <p className="text-xs text-center  text-slate-400">
           By signing up, you agree to our{" "}
-          <span className="text-blue-500">Terms</span>,{" "}
+          <span className="text-blue-500">Terms</span> ,{" "}
           <span className="text-blue-500">Privacy Policy</span> and{" "}
-          <span className="text-blue-500">Cookie Policy</span>.
+          <span className="text-blue-500">Cookie Policy</span>{" "}
         </p>
 
         {loading ? (
-          <Button className="bg-blue-500 text-white mt-5 hover:bg-blue-600">
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
+          <Button className="bg-slate-300 text-black mt-5 hover:bg-white">
+            <Loader2 className="mr-2 h-4 w-4  animate-spin" /> Please wait
           </Button>
         ) : (
           <Button
             type="submit"
-            className="bg-blue-500 text-white mt-5 hover:bg-blue-600"
+            className="bg-slate-300 text-black mt-5 hover:bg-white"
           >
-            Sign up
+            Signup
           </Button>
         )}
 
         <span className="text-right font-bold text-sm mt-4">
           Already have an account?{" "}
-          <Link to="/login" className="text-pink-500">
+          <Link to="/login" className="text-blue-600">
             Login
           </Link>
         </span>
