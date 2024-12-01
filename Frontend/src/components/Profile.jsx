@@ -185,7 +185,7 @@ function Profile() {
 
     {/* Tabs Section */}
     <div className="mr-5 ml-5 sm:mr-44 sm:ml-48">
-      <div className={`border-t border-t-gray-400 ${userProfile?.[activeTab]?.length !== 0 ? 'md:ml-10 md:ml-20' : ''}`}></div>
+      <div className={`border-t border-t-gray-400 ${userProfile?.[activeTab]?.length !== 0 ? 'md:ml-20' : ''}`}></div>
       <div className="flex items-center justify-center gap-4 sm:gap-10 text-sm">
         <div
           onClick={() => handleTabChange("posts")}
