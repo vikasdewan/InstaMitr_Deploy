@@ -49,6 +49,8 @@ function LeftSideBar() {
       navigate("/chat");
     } else if (textType == "Search") {
       navigate("/search");
+    } else if (textType == "Reels") {
+      navigate("/reels");
     }
   };
 
