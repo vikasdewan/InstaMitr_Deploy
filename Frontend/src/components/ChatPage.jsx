@@ -58,7 +58,7 @@ export const ChatPage = () => {
     return () => {
       dispatch(setSelectedUser(null));
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (location.state?.selectedUser) {
@@ -85,7 +85,7 @@ export const ChatPage = () => {
     };
 
     fetchMessages();
-  }, [selectedUser]);
+  }, [selectedUser,dispatch]);
 
   return (
     <div className="text-white flex flex-col md:flex-row md:ml-48 h-screen">
