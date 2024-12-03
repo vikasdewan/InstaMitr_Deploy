@@ -211,6 +211,7 @@ function Post({ post }) {
         className="rounded-sm my-2 w-full aspect-square object-cover"
         src={post?.image}
         alt="post_image"
+        onDoubleClick={likeOrDislikeHandler}
       />
 
       <div className="flex items-center justify-between my-2">
