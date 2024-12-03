@@ -113,7 +113,7 @@ export const login = async (req, res) => {
       followers: user.followers,
       following: user.following,
       posts: populatedPosts,
-
+      bookmarks:user.bookmarks
     };
 
     return res
