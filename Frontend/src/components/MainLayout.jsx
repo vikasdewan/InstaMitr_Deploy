@@ -2,9 +2,21 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import LeftSideBar from "./LeftSideBar";
 import BottomBar from "./BottomBar"; // Import BottomBar
+import Loader from "./Loader.jsx";
 
 function MainLayout() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => { 
+    // Simulate a delay for loading content, like fetching data 
+    setTimeout(() => { setLoading(false); }, 500); // Adjust the timeout as needed 
+    }, []);
+
   return (
+    <>
+    {loading ? 
+   
+   <Loader/> :
+    
     <div className="flex flex-col md:flex-row">
       <LeftSideBar className="hidden md:flex" /> {/* Hide on small screens */}
       <div className="flex-grow">
@@ -12,6 +24,10 @@ function MainLayout() {
       </div>
       <BottomBar className="md:hidden" /> {/* Show on small screens */}
     </div>
+    
+  }
+    </>
+    
   );
 }
 

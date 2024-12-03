@@ -15,7 +15,7 @@ const Home = () => {
 
   useEffect(() => { 
     // Simulate a delay for loading content, like fetching data 
-    setTimeout(() => { setLoading(false); }, 2000); // Adjust the timeout as needed 
+    setTimeout(() => { setLoading(false); }, 500); // Adjust the timeout as needed 
     }, []);
 
 

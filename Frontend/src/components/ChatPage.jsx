@@ -18,7 +18,7 @@ export const ChatPage = () => {
   const [showChatList, setShowChatList] = useState(true); // State for controlling chat list visibility on mobile
 
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation(); // Use location to get passed state
   const [followedUsers, setFollowedUsers] = useState([]);
 
   // Filter out users that are already in the following list
@@ -63,6 +63,7 @@ export const ChatPage = () => {
   useEffect(() => {
     if (location.state?.selectedUser) {
       dispatch(setSelectedUser(location.state.selectedUser));
+      setShowChatList(false); // Ensure the chat list is hidden when navigating directly to a chat
     }
   }, [location.state, dispatch]);
 
@@ -85,12 +86,12 @@ export const ChatPage = () => {
     };
 
     fetchMessages();
-  }, [selectedUser,dispatch]);
+  }, [selectedUser, dispatch]);
 
   return (
     <div className="text-white flex flex-col md:flex-row md:ml-48 h-screen">
-      <section className={`w-full border-b  md:w-1/4 my-8 md:my-0 md:mx-8 ${showChatList ? 'block' : 'hidden'} md:block`}>
-        <h1 className="font-bold mb-8 py-2 px-4 text-2xl border-b ">{user?.username}</h1>
+      <section className={`w-full border-b md:w-1/4 my-8 md:my-0 md:mx-8 ${showChatList ? 'block' : 'hidden'} md:block`}>
+        <h1 className="font-bold mb-8 py-2 px-4 text-2xl border-b">{user?.username}</h1>
         <div className="overflow-y-auto h-[40vh] md:h-[80vh]">
           {followedUsers.map((suggestedUser) => {
             const isOnline = onlineUsers.includes(suggestedUser?._id);
