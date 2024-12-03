@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Bookmark, MessageCircle, MoreHorizontal, Send } from "lucide-react";
@@ -13,19 +13,19 @@ import "../index.css";
 import { Badge } from "./ui/badge";
 import { Link } from "react-router-dom";
 import { setAuthUser, setSuggestedUsers, setUserProfile } from "@/redux/authSlice";
+ 
 
 function Post({ post }) {
   const [text, setText] = useState("");
   const [openComment, setOpenComment] = useState(false);
-  const { user,suggestedUsers } = useSelector((store) => store.auth);
+  const { user, suggestedUsers } = useSelector((store) => store.auth);
   const { posts } = useSelector((store) => store.post);
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(post?.likes?.includes(user?._id));
   const [postLike, setPostLike] = useState(post?.likes?.length);
   const [comment, setComment] = useState(post?.comments);
   const [animate, setAnimate] = useState(false);
-  const [bookmarked, setBookmarked] = useState(
-    post?.bookmarks?.includes(user?._id) || false
+  const [bookmarked, setBookmarked] = useState( false
   );
   const [showHeart, setShowHeart] = useState(false);
   const [ isFollowing , setIsFollowing] = useState(user?.following?.includes(post?.author?._id))
@@ -70,10 +70,10 @@ function Post({ post }) {
         toast.success(res.data.message);
 
         if (!liked) {
-          setShowHeart(true); setTimeout(() => { 
-           setShowHeart(false); 
-         }, 1000); // Duration of the animation 
-       }
+           setShowHeart(true); setTimeout(() => { 
+            setShowHeart(false); 
+          }, 1000); // Duration of the animation 
+        }
       }
     } catch (error) {
       console.log(error);
@@ -83,6 +83,9 @@ function Post({ post }) {
   const handleDoubleClick = () => {
     likeOrDislikeHandler();
   };
+  
+
+  
 
   const commentHandler = async () => {
     try {
@@ -134,6 +137,7 @@ function Post({ post }) {
   };
 
   const bookmarkHandler = async () => {
+ 
     try {
       const res = await axios.get(
         `https://instamitr-deploy-1.onrender.com/api/v1/post/${post?._id}/bookmark`,
@@ -141,12 +145,11 @@ function Post({ post }) {
       );
 
       if (res.data.success) {
-        setBookmarked((prev)=>!prev);
+        
         const updatedPostData = posts.map((p) =>
-          p?._id === post?._id ? { ...p, bookmarked: !p
-            .bookmarked } : p
-            );
-            dispatch(setPosts(updatedPostData));
+          p?._id === post?._id ? { ...p, bookmarked: !p.bookmarked } : p
+        );
+        dispatch(setPosts(updatedPostData));
         toast.success(res.data.message);
       }
     } catch (error) {
@@ -154,11 +157,13 @@ function Post({ post }) {
     }
   };
 
+  
+
   const handleUnfollow = async () => {
     try {
       // console.log("follow/unfollow button clicked")
       const response = await axios.post(
-        `http://localhost:8000/api/v1/user/followorunfollow/${post?.author?._id}`,
+        `https://instamitr-deploy-1.onrender.com/api/v1/user/followorunfollow/${post?.author?._id}`,
         {}, // No body data required
         {
           withCredentials: true, // Send cookies with the request
@@ -248,7 +253,7 @@ function Post({ post }) {
               >
                 Unfollow
               </Button>
-            ):""}
+            ) : ""}
 
             
             <Link to={`/profile/${post?.author?._id}`}>
@@ -283,6 +288,7 @@ function Post({ post }) {
       />
       {showHeart && <FaHeart className="heart-animation" />}
       </div>
+     
 
       <div className="flex items-center justify-between my-2">
         <div className="flex items-center gap-3 ">
