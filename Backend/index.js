@@ -32,7 +32,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(urlencoded({ extended: true }));
 const corsOptions = {
-  origin:"https://instamitr.netlify.app",
+  origin: process.env.URL,
   credentials: true,
 };
 app.use(cors(corsOptions));
