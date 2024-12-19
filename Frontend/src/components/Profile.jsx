@@ -196,15 +196,18 @@ function Profile() {
             POSTS
           </span>
         </div>
-        <div
-          onClick={() => handleTabChange("bookmarks")}
-          className="flex cursor-pointer items-center justify-center gap-1"
-        >
-          <Bookmark className="w-5 h-5 font-normal" />
-          <span className={`py-3 text-gray-400 ${activeTab === "bookmarks" ? "font-bold text-white" : ""}`}>
-            SAVED
-          </span>
-        </div>
+        {
+          user._id == userProfile._id ? (<div
+            onClick={() => handleTabChange("bookmarks")}
+            className="flex cursor-pointer items-center justify-center gap-1"
+          >
+            <Bookmark className="w-5 h-5 font-normal" />
+            <span className={`py-3 text-gray-400 ${activeTab === "bookmarks" ? "font-bold text-white" : ""}`}>
+              SAVED
+            </span>
+          </div>) : ("")
+        }
+        
         <div className="flex cursor-pointer items-center justify-center gap-1">
           <PlaySquare className="w-5 h-5 font-normal" />
           <span className="py-3 text-gray-400">REELS</span>
