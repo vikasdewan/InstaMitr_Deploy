@@ -41,15 +41,25 @@ function Login() {
           withCredentials: true,
         }
       );
-
+  
       if (res.data.success) {
         dispatch(setAuthUser(res.data.user));
         navigate("/");
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      console.log('Error:', error);
+      if (error.response) {
+        if (error.response.status === 504) {
+          toast.error('The server took too long to respond. Please try again later.');
+        } else {
+          toast.error(`Server error: ${error.response.status}`);
+        }
+      } else if (error.request) {
+        toast.error('No response received from the server');
+      } else {
+        toast.error('Request setup error: ' + error.message);
+      }
       setInput({
         email: "",
         password: "",
@@ -58,6 +68,7 @@ function Login() {
       setloading(false);
     }
   };
+  
 
   useEffect(() => {
     if (user) {
