@@ -32,7 +32,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(urlencoded({ extended: true }));
 const corsOptions = {
-  origin:"https://instamitr-deploy-1.onrender.com",
+  origin:"https://instamitr.vercel.app",
   credentials: true,
 };
 app.use(cors(corsOptions));
