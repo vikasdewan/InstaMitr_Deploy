@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthUser } from "@/redux/authSlice.js";
 import Loader from "./Loader.jsx";
+import { USER_API_END_POINT } from "utils/constant.js";
+
 
 function Login() {
   const [input, setInput] = useState({ email: "", password: "" });
@@ -30,7 +32,7 @@ function Login() {
     try {
       setloading(true);
       const res = await axios.post(
-        "https://instamitr-deploy-1.onrender.com/api/v1/user/login",
+        "https://instamitr.vercel.app/api/v1/user/login",
         input,
         {
           headers: {
