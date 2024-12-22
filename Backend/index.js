@@ -33,8 +33,7 @@ app.use(cookieParser());
 app.use(urlencoded({ extended: true }));
 
 const allowedOrigins = [
-  "https://instamitr-deploy-1.onrender.com",
-  "https://instamitr.vercel.app",
+  "https://instamitr.vercel.app"
 ];
 
 const corsOptions = {
