@@ -1,1 +1,0 @@
-export const USER_API_END_POINT="https://instamitr.vercel.app"

@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthUser } from "@/redux/authSlice.js";
 import Loader from "./Loader.jsx";
-import { USER_API_END_POINT } from "utils/constant.js";
+
 
 
 function Login() {
