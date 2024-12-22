@@ -1,74 +1,152 @@
-import express, { urlencoded } from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
-import connectDB from "./utils/db.js";
-import userRoute from "./routes/user.route.js";
-import postRoute from "./routes/post.route.js";
-import messageRoute from "./routes/message.route.js";
-import { app , server } from "./socket/socket.js";
-import path from "path";
+import { Label } from "./ui/label.jsx";
+import React, { useEffect, useState, useCallback } from "react";
+import { Input } from "./ui/input.jsx";
+import { Button } from "./ui/button.jsx";
+import { toast } from "sonner";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthUser } from "@/redux/authSlice.js";
+import Loader from "./Loader.jsx";
 
+function Login() {
+  const [input, setInput] = useState({ email: "", password: "" });
+  const { user } = useSelector((state) => state.auth);
 
+  const changeEventHandler = useCallback((e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  }, [input]);
 
-dotenv.config({});
+  const [loading, setLoading] = useState(false);
+  const [webLoading, setWebLoading] = useState(true);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-const __dirname = path.resolve(); //to get the current directory
-
- 
-
-const port = process.env.PORT || 3000;
-
-// app.get("/", (req, res) => {
-//   return res.status(200).json({
-//     message: "i am coming from backend",
-//     success: true,
-//   });
-// });
-
-//middleware
-
-app.use(express.json());
-app.use(cookieParser());
-app.use(urlencoded({ extended: true }));
-
-const allowedOrigins = [
-  "https://instamitr.vercel.app"
-];
-
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
+  const loginHandler = async (e) => {
+    e.preventDefault();
+    if (!input.email || !input.password) {
+      toast.error("Please fill in both fields");
+      return;
     }
-  },
-  credentials: true,
-};
 
-app.use(cors(corsOptions));
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        "https://instamitr.vercel.app/api/v1/user/login",
+        input,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
 
+      if (res.data.success) {
+        dispatch(setAuthUser(res.data.user));
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "An error occurred");
+      setInput({
+        email: "",
+        password: "",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
-//yaha par api  call karna hai
-app.use("/api/v1/user", userRoute);
-app.use("/api/v1/post", postRoute);
-app.use("/api/v1/message", messageRoute);
- 
-app.use(express.static(path.join(__dirname,"/Frontend/dist"))) //dist folder ko static file ke roop me serve karna hai jo ki frontend me hai  // run command : npm run build
+  useEffect(() => {
+    setTimeout(() => {
+      setWebLoading(false);
+    }, 2000); // Adjust the timeout as needed
+  }, []);
 
-app.get("*",(req,res)=>{ // other than the above routes , this route will be executed routes present in frontend
-  res.sendFile(path.resolve(__dirname,"Frontend","dist","index.html"));
-})
- 
+  return (
+    <>
+      {webLoading ? (
+        <Loader />
+      ) : (
+        <div className="flex items-center w-screen h-screen justify-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white">
+          <form
+            onSubmit={loginHandler}
+            className="shadow-lg flex flex-col gap-1 bg-black p-7 w-96 rounded-md"
+          >
+            <div className="my-4">
+              <h1 className="text-center font-bold text-2xl text-pink-500">InstaMitr</h1>
+              <p className="pl-2 text-sm text-center font-medium mt-2 text-gray-300">
+                Login to see photos and videos from your friends.
+              </p>
+            </div>
+            <div>
+              <Label className="font-medium pl-1 text-gray-400">Email</Label>
+              <Input
+                type="email"
+                placeholder="Email"
+                name="email"
+                value={input.email}
+                onChange={changeEventHandler}
+                className="text-black font-bold focus-visible:ring-transparent my-2 bg-gray-200"
+              />
+            </div>
+            <div>
+              <Label className="font-medium pl-1 text-gray-400">Password</Label>
+              <Input
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={input.password}
+                onChange={changeEventHandler}
+                className="text-black font-bold focus-visible:ring-transparent my-2 bg-gray-200"
+              />
+            </div>
 
+            <p className="text-xs text-center text-gray-500">
+              People who use our service may have uploaded your contact information
+              to Instagram. <span className="text-blue-500">Learn More</span>
+            </p>
 
+            <p className="text-xs text-center text-gray-500">
+              By signing up, you agree to our{" "}
+              <span className="text-blue-500">Terms</span>,{" "}
+              <span className="text-blue-500">Privacy Policy</span> and{" "}
+              <span className="text-blue-500">Cookie Policy</span>.
+            </p>
 
-server.listen(port, () => {
-  connectDB();
-  console.log(`server listening at port : ${port}`);
-});
+            {loading ? (
+              <Button className="bg-blue-500 text-white mt-5 hover:bg-blue-600">
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                className="bg-blue-500 text-white mt-5 hover:bg-blue-600"
+              >
+                Login
+              </Button>
+            )}
 
+            <span className="text-right font-bold text-sm mt-4">
+              Don't have an account?{" "}
+              <Link to="/signup" className="text-pink-500">
+                Sign up
+              </Link>
+            </span>
+          </form>
+        </div>
+      )}
+    </>
+  );
+}
 
-export default app;
+export default Login;
