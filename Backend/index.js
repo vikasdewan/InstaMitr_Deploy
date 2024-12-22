@@ -19,12 +19,12 @@ const __dirname = path.resolve(); //to get the current directory
 
 const port = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
-  return res.status(200).json({
-    message: "i am coming from backend",
-    success: true,
-  });
-});
+// app.get("/", (req, res) => {
+//   return res.status(200).json({
+//     message: "i am coming from backend",
+//     success: true,
+//   });
+// });
 
 //middleware
 
