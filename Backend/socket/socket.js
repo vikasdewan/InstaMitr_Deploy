@@ -8,7 +8,7 @@ const server =  http.createServer(app);
 
 const io = new Server(server,{
     cors:{
-        origin:"https://instamitr.vercel.app",
+        origin:"https://instamitr-deploy-1.onrender.com",
         methods:['GET' , 'POST']
     }
 })

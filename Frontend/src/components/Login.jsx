@@ -12,8 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuthUser } from "@/redux/authSlice.js";
 import Loader from "./Loader.jsx";
 
-
-
 function Login() {
   const [input, setInput] = useState({ email: "", password: "" });
   const { user } = useSelector((state) => state.auth);
@@ -32,7 +30,7 @@ function Login() {
     try {
       setloading(true);
       const res = await axios.post(
-        "https://instamitr.vercel.app/api/v1/user/login",
+        "https://instamitr-deploy-1.onrender.com/api/v1/user/login",
         input,
         {
           headers: {
@@ -41,25 +39,15 @@ function Login() {
           withCredentials: true,
         }
       );
-  
+
       if (res.data.success) {
         dispatch(setAuthUser(res.data.user));
         navigate("/");
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.log('Error:', error);
-      if (error.response) {
-        if (error.response.status === 504) {
-          toast.error('The server took too long to respond. Please try again later.');
-        } else {
-          toast.error(`Server error: ${error.response.status}`);
-        }
-      } else if (error.request) {
-        toast.error('No response received from the server');
-      } else {
-        toast.error('Request setup error: ' + error.message);
-      }
+      console.log(error);
+      toast.error(error.response.data.message);
       setInput({
         email: "",
         password: "",
@@ -68,7 +56,6 @@ function Login() {
       setloading(false);
     }
   };
-  
 
   useEffect(() => {
     if (user) {

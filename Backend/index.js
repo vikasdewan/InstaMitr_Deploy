@@ -31,22 +31,10 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(urlencoded({ extended: true }));
-
-const allowedOrigins = [
-  "https://instamitr.vercel.app"
-];
-
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin:"https://instamitr-deploy-1.onrender.com",
   credentials: true,
 };
-
 app.use(cors(corsOptions));
 
 
@@ -69,6 +57,3 @@ server.listen(port, () => {
   connectDB();
   console.log(`server listening at port : ${port}`);
 });
-
-
-export default app;
