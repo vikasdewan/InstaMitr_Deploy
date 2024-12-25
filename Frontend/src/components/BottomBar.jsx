@@ -65,9 +65,9 @@ export function BottomBar() {
     // { icon: <TrendingUp />, text: "Explore" },
     // { icon: <PlaySquare />, text: "Reels" },
     { icon: <MessageCircle />, text: "Messages" },
+    { icon: <PlusSquare />, text: "Create" },
     { icon: <PlaySquare />, text: "Reels" },
     { icon: <Heart />, text: "Notifications" },
-    { icon: <PlusSquare />, text: "Create" },
     {
       icon: (
         <Avatar className="w-8 h-8">
@@ -99,7 +99,7 @@ export function BottomBar() {
           className="flex flex-col items-center cursor-pointer"
         >
           {item.icon}
-          <span className="text-xs">{item.text}</span>
+          {/* <span className="text-xs">{item.text}</span> */}
           {
                 item.text === 'Notifications' && likeNotiList?.length>0 && showPopover &&(
                   <Popover className="left-0">
