@@ -16,7 +16,7 @@ import { setlikeNotiList  } from "./redux/realTimeNotiSlice";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
 import { SearchTab } from "./components/SearchTab";
 import SuggestedUsersPage from "./components/SuggestedUsersPage";  
-
+import Reels from "./components/Reels.jsx";
 
 const browserRouter = createBrowserRouter([
   {
@@ -58,6 +58,10 @@ const browserRouter = createBrowserRouter([
     path: "/signup",
     element: <Signup />,
   },
+  {
+    path : "/reels/random",
+    element:<Reels/>
+  }
 ]);
 
 function App() {

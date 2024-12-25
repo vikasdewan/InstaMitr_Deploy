@@ -8,7 +8,7 @@ import postRoute from "./routes/post.route.js";
 import messageRoute from "./routes/message.route.js";
 import { app , server } from "./socket/socket.js";
 import path from "path";
-
+import reelRoute from "./routes/reels.route.js"
 
 
 dotenv.config({});
@@ -33,7 +33,6 @@ app.use(cookieParser());
 app.use(urlencoded({ extended: true }));
 const allowedOrigins = [
   "https://instamitr-deploy-1.onrender.com",
-  "https://insta-mitr-frontend.vercel.app",
 ];
 
 const corsOptions = {
@@ -55,6 +54,7 @@ app.use(cors(corsOptions));
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/post", postRoute);
 app.use("/api/v1/message", messageRoute);
+app.use("/api/vi/reels",reelRoute)
  
 app.use(express.static(path.join(__dirname,"/Frontend/dist"))) //dist folder ko static file ke roop me serve karna hai jo ki frontend me hai  // run command : npm run build
 

@@ -53,6 +53,9 @@ export function BottomBar() {
       navigate("/chat");
     } else if (textType == "Search") {
       navigate("/search");
+    } else if (textType === "Reels") {
+      // Navigate to the Reels page when the Reels button is clicked
+      navigate("/reels/random");
     }
   };
 
@@ -62,6 +65,7 @@ export function BottomBar() {
     // { icon: <TrendingUp />, text: "Explore" },
     // { icon: <PlaySquare />, text: "Reels" },
     { icon: <MessageCircle />, text: "Messages" },
+    { icon: <PlaySquare />, text: "Reels" },
     { icon: <Heart />, text: "Notifications" },
     { icon: <PlusSquare />, text: "Create" },
     {

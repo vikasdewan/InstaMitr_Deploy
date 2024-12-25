@@ -52,7 +52,10 @@ function LeftSideBar() {
       navigate("/chat");
     } else if (textType == "Search") {
       navigate("/search");
-    } 
+    } else if (textType === "Reels") {
+      // Navigate to the Reels page when the Reels button is clicked
+      navigate("/reels/random");
+    }
   };
 
   const sideBarItems = [
