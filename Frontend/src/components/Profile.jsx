@@ -35,6 +35,8 @@ function Profile() {
   const [isFollowing, setIsFollowing] = useState(false);
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [openPostDialog, setOpenPostDialog] = useState(false);  // state to control modal visibility
+  const [selectedPost, setSelectedPost] = useState(null);  
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -107,6 +109,17 @@ function Profile() {
     navigate("/chat", { state: { selectedUser: userProfile } });
   }
 
+  const openPostDialogHandler = (post) => {
+    setSelectedPost(post);
+    setOpenPostDialog(true);
+  };
+
+  // Close post dialog
+  const closeDialog = () => {
+    setOpenPostDialog(false);
+    setSelectedPost(null);
+  };
+        
   return (
     <div className="text-white bg-black flex flex-col mx-auto w-full md:min-w-[94.8%] justify-center md:ml-20 md:pl-10">
   <div className="flex flex-col gap-10 py-8 h-[100%]">
@@ -221,7 +234,10 @@ function Profile() {
       {/* Posts Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 bg-black pl-1 sm:pl-[8%]">
         {displayedPost?.map((post) => (
-          <div key={post?.id} className="relative group cursor-pointer">
+          <div 
+          key={post?.id} 
+          className="relative group cursor-pointer"
+          onClick={() => openPostDialogHandler(post)}>
             <img
               src={post?.image}
               alt="post_image"
@@ -244,6 +260,30 @@ function Profile() {
       </div>
     </div>
   </div>
+
+
+        {/* to Open Particular Post */}
+  {openPostDialog && selectedPost && (
+          <div className="fixed inset-0  bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-black p-6 rounded-lg md:w-1/2  w-96 mx-2 ">
+              <h3 className="text-xl font-semibold mb-4">{selectedPost?.caption}</h3>
+              <img
+                src={selectedPost?.image}
+                alt={selectedPost?.caption}
+                className="cover w-full h-96 object-cover rounded-lg mb-4"
+              />
+              {/* <p className="text-gray-700 mb-4">{selectedPost.description}</p> */}
+              <div className="flex justify-end">
+                <button
+                  onClick={closeDialog}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 </div>
 
   );
