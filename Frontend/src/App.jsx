@@ -17,6 +17,7 @@ import { ProtectedRoutes } from "./components/ProtectedRoutes";
 import { SearchTab } from "./components/SearchTab";
 import SuggestedUsersPage from "./components/SuggestedUsersPage";  
 import Reels from "./components/Reels.jsx";
+import Explore from "./components/Explore.jsx"
 
 const browserRouter = createBrowserRouter([
   {
@@ -60,7 +61,11 @@ const browserRouter = createBrowserRouter([
   },
   {
     path : "/reels/random",
-    element:<Reels/>
+    element:<ProtectedRoutes><Reels/></ProtectedRoutes>
+  },
+  {
+    path : "/explore",
+    element:<ProtectedRoutes><Explore/></ProtectedRoutes>
   }
 ]);
 
