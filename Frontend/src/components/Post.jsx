@@ -231,7 +231,7 @@ function Post({ post }) {
             }
           });
         },
-        { threshold: 0.5 } // Video will be considered in the viewport if at least 50% of it is visible
+        { threshold: 0.7 } // Video will be considered in the viewport if at least 50% of it is visible
       );
   
       if (videoElement) {
