@@ -82,7 +82,7 @@ const Reels = () => {
     <div
       {...swipeHandlers}
       onWheel={handleMouseScroll}
-      className="flex flex-col items-center h-screen overflow-hidden relative bg-black"
+      className="flex flex-col items-center h-screen overflow-hidden relative bg-gradient-to-r from-black via-black  to-black"
     >
       {reels.length > 0 && (
         <div className="relative md:w-1/4 w-full h-full flex items-center justify-center">
@@ -91,16 +91,19 @@ const Reels = () => {
             src={reels[currentReelIndex].video}
             controls={false}
             autoPlay
-         
             loop
             onEnded={handleVideoEnd}
-            className="w-full h-[90vh] object-fill p-1 rounded-lg"
+            className="w-full h-[90vh] object-fill rounded-lg p-1"
             onClick={() => handleToggleSound(currentReelIndex)}
           />
           {showSymbol && (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="bg-black bg-opacity-50 text-white text-3xl font-bold p-1 rounded-full">
-              {symbol === "mute" ? (<i className="fas fa-volume-mute"></i>): (<i className="fas fa-volume-up"></i>)}
+                {symbol === "mute" ? (
+                  <i className="fas fa-volume-mute"></i>
+                ) : (
+                  <i className="fas fa-volume-up"></i>
+                )}
               </div>
             </div>
           )}
