@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Bookmark, MessageCircle, MoreHorizontal, Send } from "lucide-react";
@@ -29,6 +29,7 @@ function Post({ post }) {
   );
   const [showHeart, setShowHeart] = useState(false);
   const [ isFollowing , setIsFollowing] = useState(user?.following?.includes(post?.author?._id))
+  const videoRef = useRef(null);
 
   const changeEventHandler = (e) => {
     const inputText = e.target.value;
@@ -215,6 +216,37 @@ function Post({ post }) {
      setBookmarked(user?.bookmarks?.includes(post._id)); 
     }, [user, post._id]);
 
+   useEffect(() => {
+      const videoElement = videoRef.current;
+  
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Play the video when it enters the viewport
+              videoElement?.play();
+            } else {
+              // Pause the video when it leaves the viewport
+              videoElement?.pause();
+            }
+          });
+        },
+        { threshold: 0.5 } // Video will be considered in the viewport if at least 50% of it is visible
+      );
+  
+      if (videoElement) {
+        observer.observe(videoElement);
+      }
+  
+      return () => {
+        if (videoElement) {
+          observer.unobserve(videoElement);
+        }
+      };
+    }, []);
+
+
+
   return (
     <div className="my-8 w-full max-w-md mx-auto text-white px-2 md:px-0">
       <div className="flex items-center justify-between">
@@ -280,6 +312,7 @@ function Post({ post }) {
       <div className="relative "> 
       {post?.video ? (
   <video
+  ref={videoRef}
     className="rounded-sm my-2 w-full aspect-square object-cover"
     controls
     src={post?.video}
