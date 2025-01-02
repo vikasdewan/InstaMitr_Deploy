@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import useGetUserProfile from "@/hooks/useGetUserProfile";
+import useGetUserProfile from "@/hooks/useGetUserProfile.jsx";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./ui/button";
@@ -109,7 +109,8 @@ function Profile() {
     navigate("/chat", { state: { selectedUser: userProfile } });
   }
 
-  const openPostDialogHandler = (post) => {
+   // Open post dialog
+   const openPostDialogHandler = (post) => {
     setSelectedPost(post);
     setOpenPostDialog(true);
   };
@@ -119,9 +120,14 @@ function Profile() {
     setOpenPostDialog(false);
     setSelectedPost(null);
   };
-        
+
+
   return (
+
+    
     <div className="text-white bg-black flex flex-col mx-auto w-full md:min-w-[94.8%] justify-center md:ml-20 md:pl-10">
+
+      
   <div className="flex flex-col gap-10 py-8 h-[100%]">
     <div className="md:grid md:grid-cols-2 gap-3">
       {/* Profile Picture Section */}
@@ -149,7 +155,7 @@ function Profile() {
                 </Button>
               </div>
             ) : isFollowing ? (
-              <div className="flex justify-center items-center flex-wrap gap-2">
+              <div className="flex items-center justify-center flex-wrap gap-2">
                 <Button onClick={handleFollowToggle} className="bg-gray-700 text-white font-semibold hover:bg-gray-800 h-8" variant="secondary">
                   Unfollow
                 </Button>
@@ -172,7 +178,7 @@ function Profile() {
             )}
           </div>
 
-          <div className="flex flex-row   items-center justify-center md:justify-start gap-4 md:gap-9">
+          <div className="flex flex-row  items-center justify-center md:justify-start gap-4 md:gap-9">
             <p>
               <span className="font-semibold pr-1 text-lg">{userProfile?.posts?.length}</span> posts
             </p>
@@ -198,7 +204,7 @@ function Profile() {
 
     {/* Tabs Section */}
     <div className="mr-5 ml-5 sm:mr-44 sm:ml-48">
-      <div className={`border-t border-t-gray-400 ${userProfile?.[activeTab]?.length !== 0 ? 'md:ml-20' : ''}`}></div>
+      <div className={`border-t border-t-gray-400 ${userProfile?.[activeTab]?.length !== 0 ? 'md:ml-10 ' : ''}`}></div>
       <div className="flex items-center justify-center gap-4 sm:gap-10 text-sm">
         <div
           onClick={() => handleTabChange("posts")}
@@ -209,18 +215,15 @@ function Profile() {
             POSTS
           </span>
         </div>
-        {
-          user._id == userProfile._id ? (<div
-            onClick={() => handleTabChange("bookmarks")}
-            className="flex cursor-pointer items-center justify-center gap-1"
-          >
-            <Bookmark className="w-5 h-5 font-normal" />
-            <span className={`py-3 text-gray-400 ${activeTab === "bookmarks" ? "font-bold text-white" : ""}`}>
-              SAVED
-            </span>
-          </div>) : ("")
-        }
-        
+        <div
+          onClick={() => handleTabChange("bookmarks")}
+          className="flex cursor-pointer items-center justify-center gap-1"
+        >
+          <Bookmark className="w-5 h-5 font-normal" />
+          <span className={`py-3 text-gray-400 ${activeTab === "bookmarks" ? "font-bold text-white" : ""}`}>
+            SAVED
+          </span>
+        </div>
         <div className="flex cursor-pointer items-center justify-center gap-1">
           <PlaySquare className="w-5 h-5 font-normal" />
           <span className="py-3 text-gray-400">REELS</span>
@@ -237,12 +240,23 @@ function Profile() {
           <div 
           key={post?.id} 
           className="relative group cursor-pointer"
-          onClick={() => openPostDialogHandler(post)}>
-            <img
-              src={post?.image}
-              alt="post_image"
-              className="rounded-sm my-2 w-full aspect-square object-cover"
-            />
+          onClick={() => openPostDialogHandler(post)}
+          >
+            
+            {post?.video ? (
+                      <video
+                        src={post?.video}
+                        className="rounded-sm my-2 w-full aspect-square object-cover"
+                        muted
+                        loop
+                      />
+                    ) : (
+                      <img
+                        src={post?.image}
+                        alt="Post"
+                        className="rounded-sm my-2 w-full aspect-square object-cover"
+                      />
+                    )}
             <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               <div className="flex items-center text-white space-x-4 text-lg font-bold">
                 <button className="flex items-center gap-2 hover:text-gray-300">
@@ -260,18 +274,29 @@ function Profile() {
       </div>
     </div>
   </div>
+  
 
-
-        {/* to Open Particular Post */}
-        {openPostDialog && selectedPost && (
+  {openPostDialog && selectedPost && (
           <div className="fixed inset-0  bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 mx-2">
             <div className="bg-black p-6 rounded-lg md:w-1/2  w-96 mx-2 ">
               <h3 className="text-xl font-semibold mb-4">{selectedPost.caption}</h3>
-              <img
-                src={selectedPost.image}
-                alt={selectedPost.caption}
-                className="cover w-full h-96 object-fill rounded-lg mb-4"
-              />
+              
+               {selectedPost?.video ? (
+                      <video
+                        src={selectedPost?.video}
+                        alt="video_post"
+                        className="cover w-full h-96 object-fill rounded-lg mb-4"
+                        controls
+                        muted
+                        loop
+                      />
+                    ) : (
+                      <img
+                        src={selectedPost?.image}
+                        alt="Image_Post"
+                       className="cover w-full h-96 object-fill rounded-lg mb-4"
+                      />
+                    )}
               {/* <p className="text-gray-700 mb-4">{selectedPost.caption}</p> */}
               <div className="flex justify-end">
                 <button
