@@ -5,7 +5,7 @@ import cloudinary from "../utils/cloudinary.js";
 import { User } from "../models/user.model.js";
 import { getRecieverSocketId, io } from "../socket/socket.js";
 
-export const addNewPost = async (req, res) => {
+export const addNewImagePost = async (req, res) => {
   try {
     const { caption } = req.body;
     const image = req.file;
@@ -53,6 +53,72 @@ export const addNewPost = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+// Add video post
+export const addNewVideoPost = async (req, res) => {
+  try {
+    const { caption } = req.body;
+    
+    const video = req.file;  // Extract the video from req.file
+     
+    const authorId = req.id;
+ 
+    
+    if (!video) {
+      
+      return res.status(400).json({
+        message: "Video file is required.",
+        status: false,
+      });
+    }
+    
+   
+    // Upload video buffer to Cloudinary
+    const cloudResponse = await new Promise((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        { resource_type: "video", folder: "your_video_folder" },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      ).end(video.buffer); // Send the buffer
+    });
+
+    
+  
+   
+    
+    // Create the post with the video URL
+    const post = await Post.create({
+      caption,
+      video: cloudResponse.secure_url, // Store the Cloudinary URL for the video
+      author: authorId,
+    });
+ 
+    console.log(post)
+
+    // Optional: If you want to link the post to the user
+    const user = await User.findById(authorId);
+    if (user) {
+      user.posts.push(post._id); // Add post to user's list of posts
+      await user.save();
+    }
+
+    await post.populate({ path: "author", select: "-password" });
+
+    return res.status(201).json({
+      message: "New video post added successfully.",
+      post,
+      success: true,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Server error. Please try again later.",
+      status: false,
+    });
   }
 };
 

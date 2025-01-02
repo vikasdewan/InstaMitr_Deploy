@@ -1,6 +1,7 @@
 import express from "express";
 import {
-  addNewPost,
+  addNewImagePost,
+  addNewVideoPost,
   getAllPost,
   getUserPost,
   likePost,
@@ -17,8 +18,11 @@ import upload from "../middlewares/multer.js";
 const router = express.Router();
 
 router
-  .route("/addpost")
-  .post(isAuthenticated, upload.single("image"), addNewPost);
+  .route("/addpost/image")
+  .post(isAuthenticated, upload.single("image"), addNewImagePost); 
+router
+  .route("/addpost/video")
+  .post(isAuthenticated, upload.single("video"), addNewVideoPost);
 router.route("/all").get(isAuthenticated, getAllPost);
 router.route("/userpost/all").get(isAuthenticated, getUserPost);
 router.route("/:id/like").get(isAuthenticated, likePost);

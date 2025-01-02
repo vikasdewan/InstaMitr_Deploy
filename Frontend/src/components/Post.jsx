@@ -278,14 +278,22 @@ function Post({ post }) {
         </Dialog>
       </div>
       <div className="relative "> 
-      <img
-        className="rounded-sm my-2 w-full aspect-square object-cover"
-        src={post?.image}
-        alt="post_image" 
-        onDoubleClick={handleDoubleClick}
-       
-        // onTouchStart={handleDoubleTap} //double tap like
-      />
+      {post?.video ? (
+  <video
+    className="rounded-sm my-2 w-full aspect-square object-cover"
+    controls
+    src={post?.video}
+    alt="post_video"
+    
+  />
+) : (
+  <img
+    className="rounded-sm my-2 w-full aspect-square object-cover"
+    src={post?.image}
+    alt="post_image"
+    onDoubleClick={handleDoubleClick} // Optional: Double-click to like functionality
+  />
+)}
       {showHeart && <FaHeart className="heart-animation" />}
       </div>
      
