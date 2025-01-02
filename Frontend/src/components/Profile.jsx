@@ -264,26 +264,26 @@ function Profile() {
 
         {/* to Open Particular Post */}
         {openPostDialog && selectedPost && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 mx-2">
-          <div className="bg-black p-6 rounded-lg w-96 md:h-96">
-            <h3 className="text-xl font-semibold mb-4">{selectedPost.title}</h3>
-            <img
-              src={selectedPost.image}
-              alt={selectedPost.title}
-              className="w-full h-64 object-fill rounded-lg mb-4"
-            />
-            <p className="text-gray-700 mb-4">{selectedPost.description}</p>
-            <div className="flex justify-end">
-              <button
-                onClick={closeDialog}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-              >
-                Close
-              </button>
+          <div className="fixed inset-0  bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 mx-2">
+            <div className="bg-black p-6 rounded-lg md:w-1/2  w-96 mx-2 ">
+              <h3 className="text-xl font-semibold mb-4">{selectedPost.caption}</h3>
+              <img
+                src={selectedPost.image}
+                alt={selectedPost.caption}
+                className="cover w-full h-96 object-fill rounded-lg mb-4"
+              />
+              {/* <p className="text-gray-700 mb-4">{selectedPost.caption}</p> */}
+              <div className="flex justify-end">
+                <button
+                  onClick={closeDialog}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 </div>
 
   );
