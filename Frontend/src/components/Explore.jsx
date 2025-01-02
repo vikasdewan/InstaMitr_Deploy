@@ -85,7 +85,7 @@ const Explore = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="bg-gradient-to-r from-red-900 via-yellow-900 to-blue-900 min-h-screen p-4">
+        <div className="bg-gradient-to-r from-blue-900 via-black to-blue-900 min-h-screen p-4">
           {/* Search Bar */}
           <div className="md:hidden flex justify-center mb-6">
             <input
