@@ -87,7 +87,7 @@ const Explore = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="bg-gradient-to-r from-blue-900 via-black to-blue-900 min-h-screen p-1 md:p-4">
+        <div className="bg-gradient-to-r from-blue-900 via-black to-blue-900 min-h-screen p-1 md:px-20 md:py-2">
           {/* Search Bar */}
           <div className="md:hidden flex justify-center mb-6">
             <input
@@ -99,7 +99,9 @@ const Explore = () => {
           </div>
 
           {/* Posts Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 md:gap-7">
+          <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 md:gap-1 ${
+          openPostDialog ? "filter blur-sm" : "" // Add blur effect when modal is open
+        }`}>
             {posts.length > 0 ? (
               posts.map((post) => (
                 <div
