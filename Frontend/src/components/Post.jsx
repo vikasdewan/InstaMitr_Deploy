@@ -350,7 +350,7 @@ function Post({ post }) {
           <video
           onClick={handleVideoPostPlayNPause}
           ref={videoRef}
-          className="rounded-sm my-2 w-full aspect-square object-contain"
+          className="rounded-sm my-2 w-full h-[450px] aspect-square object-contain"
           src={post?.video}
           alt="post_video"
           muted={isMuted}
