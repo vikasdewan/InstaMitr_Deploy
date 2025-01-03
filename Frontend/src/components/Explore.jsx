@@ -28,8 +28,10 @@ const Explore = () => {
       try {
         const response = await axios.get("https://instamitr-deploy-1.onrender.com/api/v1/post/all", {
           withCredentials: true,
-        });
-        const shuffledPosts = shuffleArray(response.data.posts); // Shuffle the posts
+        });const filterVideoPosts = response.data.posts.filter(
+          (post) => post.video && post.video.trim() !== ""
+        );
+        const shuffledPosts = shuffleArray(filterVideoPosts); //shuffle the posts
         setPosts(shuffledPosts); // Set shuffled posts
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -85,7 +87,7 @@ const Explore = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="bg-gradient-to-r from-blue-900 via-black to-blue-900 min-h-screen p-4">
+        <div className="bg-gradient-to-r from-blue-900 via-black to-blue-900 min-h-screen p-1 md:p-4">
           {/* Search Bar */}
           <div className="md:hidden flex justify-center mb-6">
             <input
@@ -97,12 +99,12 @@ const Explore = () => {
           </div>
 
           {/* Posts Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 md:gap-7">
             {posts.length > 0 ? (
               posts.map((post) => (
                 <div
                   key={post?._id}
-                  className="relative group cursor-pointer bg-gray-800 rounded-lg shadow-lg overflow-hidden"
+                  className="relative group cursor-pointer bg-gray-800 rounded-sm shadow-lg overflow-hidden"
                   onClick={() => openDialog(post)} // Open the dialog with the selected post
                 >
                   {/* Add symbol for video or image */}
