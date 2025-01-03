@@ -10,21 +10,21 @@ const Reels = () => {
   const [symbol, setSymbol] = useState(""); // "mute" or "unmute"
   const videoRef = useRef([]);
   const navigate = useNavigate();
+  let longPressTimeout;
 
-
-  // Shuffle function to randomize the order of posts
   const shuffleArray = (array) => {
     let shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]; // Swap elements
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
     }
     return shuffledArray;
   };
+
   useEffect(() => {
     const fetchReels = async () => {
       try {
-        const res = await axios.get("https://instamitr-deploy-1.onrender.com/api/v1/post/all", {
+        const res = await axios.get("http://localhost:8000/api/v1/post/all", {
           headers: {
             "Content-Type": "application/json",
           },
@@ -89,11 +89,28 @@ const Reels = () => {
     navigate("/");
   };
 
+  const handleLongPressStart = (index) => {
+    longPressTimeout = setTimeout(() => {
+      const video = videoRef.current[index];
+      if (video) {
+        video.pause();
+      }
+    }, 500); // Long press starts after 500ms
+  };
+
+  const handleLongPressEnd = (index) => {
+    clearTimeout(longPressTimeout);
+    const video = videoRef.current[index];
+    if (video && video.paused) {
+      video.play();
+    }
+  };
+
   return (
     <div
       {...swipeHandlers}
       onWheel={handleMouseScroll}
-     className="flex flex-col items-center h-screen overflow-hidden relative bg-gradient-to-r from-blue-900 via-black  to-blue-900"
+      className="flex flex-col items-center h-screen overflow-hidden relative bg-gradient-to-r from-blue-900 via-black  to-blue-900"
     >
       {reels.length > 0 && (
         <div className="relative md:w-1/4 w-full h-full flex items-center justify-center">
@@ -105,6 +122,8 @@ const Reels = () => {
             loop
             onEnded={handleVideoEnd}
             className="w-full h-[90vh] object-fill rounded-lg p-1"
+            onPointerDown={() => handleLongPressStart(currentReelIndex)}
+            onPointerUp={() => handleLongPressEnd(currentReelIndex)}
             onClick={() => handleToggleSound(currentReelIndex)}
           />
           {showSymbol && (
