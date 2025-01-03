@@ -24,7 +24,7 @@ const Reels = () => {
   useEffect(() => {
     const fetchReels = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/v1/post/all", {
+        const res = await axios.get("https://instamitr-deploy-1.onrender.com/api/v1/post/all", {
           headers: {
             "Content-Type": "application/json",
           },
