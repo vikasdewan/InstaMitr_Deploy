@@ -125,39 +125,42 @@ const Reels = () => {
     try {
       console.log("try block")
       const currentReel = reels[currentReelIndex];
+      console.log(currentReel?.likes?.length)
       const isLiked = likedState[currentReelIndex]; // Check current like state
-
+      
       const action = isLiked ? "dislike" : "like";
-
+      
       // API request to toggle like/dislike
       const res = await axios.get(
         `https://instamitr-deploy-1.onrender.com/v1/post/${currentReel._id}/${action}`,
         { withCredentials: true }
       );
-
+      
       if (res.data.success) {
         // Update the like state for the current reel
         const updatedLikedState = [...likedState];
         updatedLikedState[currentReelIndex] = !isLiked;
         setLikedState(updatedLikedState);
-
+        
         // Update likes in the posts array (for Redux)
         const updatedLikes = isLiked
-          ? currentReel.likes.filter((id) => id !== user?._id)
+        ? currentReel.likes.filter((id) => id !== user?._id)
           : [...currentReel.likes, user?._id];
 
         // Update the reel and the posts in the Redux store
         const updatedReels = reels.map((reel, index) =>
           index === currentReelIndex ? { ...reel, likes: updatedLikes } : reel
-        );
-        setReels(updatedReels);
-
-        const updatedPostData = posts.map((p) =>
-          p?._id === currentReel._id
-            ? { ...p, likes: updatedLikes }
-            : p
-        );
-        dispatch(setPosts(updatedPostData));
+      );
+      setReels(updatedReels);
+      
+      const updatedPostData = posts.map((p) =>
+        p?._id === currentReel._id
+      ? { ...p, likes: updatedLikes }
+      : p
+    );
+    dispatch(setPosts(updatedPostData));
+    console.log(currentReel?.likes?.length)
+        console.log("try block end")
       }
     } catch (error) {
       console.log("Error handling like/dislike:", error);
