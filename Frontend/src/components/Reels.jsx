@@ -121,18 +121,18 @@ const Reels = () => {
 
   // Handle like/dislike action
   const likeOrDislikeHandler = async () => {
-    console.log("like button clicked")
+   
     try {
-      console.log("try block")
+     
       const currentReel = reels[currentReelIndex];
-      console.log(currentReel?.likes?.length)
+    
       const isLiked = likedState[currentReelIndex]; // Check current like state
       
       const action = isLiked ? "dislike" : "like";
       
       // API request to toggle like/dislike
       const res = await axios.get(
-        `https://instamitr-deploy-1.onrender.com/v1/post/${currentReel._id}/${action}`,
+        `https://instamitr-deploy-1.onrender.com/api/v1/post/${currentReel._id}/${action}`,
         { withCredentials: true }
       );
       
@@ -159,8 +159,7 @@ const Reels = () => {
       : p
     );
     dispatch(setPosts(updatedPostData));
-    console.log(currentReel?.likes?.length)
-        console.log("try block end")
+    
       }
     } catch (error) {
       console.log("Error handling like/dislike:", error);
