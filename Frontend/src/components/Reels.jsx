@@ -121,7 +121,9 @@ const Reels = () => {
 
   // Handle like/dislike action
   const likeOrDislikeHandler = async () => {
+    console.log("like button clicked")
     try {
+      console.log("try block")
       const currentReel = reels[currentReelIndex];
       const isLiked = likedState[currentReelIndex]; // Check current like state
 
