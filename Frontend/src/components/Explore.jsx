@@ -26,7 +26,7 @@ const Explore = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://instamitr-deploy-1.onrender.com/api/v1/post/all", {
+        const response = await axios.get("https://instamitr-deploy-1.onrender.com/api/v1/post/all", {
           withCredentials: true,
         });
         const Allposts = response.data.posts;
