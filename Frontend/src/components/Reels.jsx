@@ -170,10 +170,10 @@ const Reels = () => {
     <div
       {...swipeHandlers}
       onWheel={handleMouseScroll}
-      className="flex flex-col items-center h-screen overflow-hidden relative bg-gradient-to-r from-blue-900 via-black to-blue-900"
+      className="flex flex-col items-center h-screen bg-black"
     >
       {reels.length > 0 && (
-        <div className="relative md:w-1/4 w-full h-full flex items-center justify-center">
+        <div className="relative md:w-[25%] w-full h-full flex items-center justify-center">
           {/* Video Component */}
           <video
             ref={(el) => (videoRef.current[currentReelIndex] = el)}
@@ -182,7 +182,7 @@ const Reels = () => {
             autoPlay
             loop
             onEnded={handleVideoEnd}
-            className="w-full h-[90vh] object-fill rounded-lg"
+            className="w-full md:h-[90vh] h-[100vh] object-fill rounded-lg"
             onPointerDown={() => handleLongPressStart(currentReelIndex)}
             onPointerUp={() => handleLongPressEnd(currentReelIndex)}
             onClick={() => handleToggleSound(currentReelIndex)}
@@ -247,13 +247,7 @@ const Reels = () => {
       )}
 
       {/* Go to Home */}
-      <button
-        onClick={goToHome}
-        className="fixed bottom-5 right-5 bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition duration-300"
-        title="Go to Home"
-      >
-        🏠
-      </button>
+       
     </div>
   );
 };

@@ -48,6 +48,14 @@ const browserRouter = createBrowserRouter([
         path: "/suggestedusers",
         element: <ProtectedRoutes><SuggestedUsersPage/></ProtectedRoutes> ,
       },
+      {
+        path : "/reels/random",
+        element:<ProtectedRoutes><Reels/></ProtectedRoutes>
+      },
+      {
+        path : "/explore",
+        element:<ProtectedRoutes><Explore/></ProtectedRoutes>
+      }
     ],
   },
 
@@ -59,14 +67,7 @@ const browserRouter = createBrowserRouter([
     path: "/signup",
     element: <Signup />,
   },
-  {
-    path : "/reels/random",
-    element:<ProtectedRoutes><Reels/></ProtectedRoutes>
-  },
-  {
-    path : "/explore",
-    element:<ProtectedRoutes><Explore/></ProtectedRoutes>
-  }
+  
 ]);
 
 function App() {

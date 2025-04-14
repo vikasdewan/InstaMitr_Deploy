@@ -26,12 +26,11 @@ const Explore = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("https://instamitr-deploy-1.onrender.com/api/v1/post/all", {
+        const response = await axios.get("http://instamitr-deploy-1.onrender.com/api/v1/post/all", {
           withCredentials: true,
-        });const filterVideoPosts = response.data.posts.filter(
-          (post) => post.video && post.video.trim() !== ""
-        );
-        const shuffledPosts = shuffleArray(filterVideoPosts); //shuffle the posts
+        });
+        const Allposts = response.data.posts;
+        const shuffledPosts = shuffleArray(Allposts); // Shuffle the posts
         setPosts(shuffledPosts); // Set shuffled posts
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -87,7 +86,7 @@ const Explore = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="bg-gradient-to-r from-blue-900 via-black to-blue-900 min-h-screen p-1 md:px-20 md:py-2">
+        <div className={`bg-black min-h-screen p-1 md:pl-96 md:pr-40 md:py-2 `}>
           {/* Search Bar */}
           <div className="md:hidden flex justify-center mb-6">
             <input
@@ -99,7 +98,7 @@ const Explore = () => {
           </div>
 
           {/* Posts Grid */}
-          <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 md:gap-1 ${
+          <div className={`grid grid-cols-2 mt-5 md:grid-cols-3 lg:grid-cols-3 gap-1 md:gap-1 ${
           openPostDialog ? "filter blur-sm" : "" // Add blur effect when modal is open
         }`}>
             {posts.length > 0 ? (
@@ -110,7 +109,7 @@ const Explore = () => {
                   onClick={() => openDialog(post)} // Open the dialog with the selected post
                 >
                   {/* Add symbol for video or image */}
-                  <div className="absolute top-2 right-2 bg-black bg-opacity-50 opacity-70 text-white rounded-full p-2 z-10">
+                  <div className="absolute top-2 right-2 bg-black bg-opacity-50 opacity-50 text-white rounded-full p-1 z-10">
                     {post?.video ? (
                       <i className="fas fa-video"></i>
                     ) : (
@@ -121,7 +120,7 @@ const Explore = () => {
                   {post?.video ? (
                     <video
                       src={post?.video}
-                      className="w-full h-64 object-cover transition-all duration-300 transform group-hover:scale-105"
+                      className="w-full h-64  object-cover transition-all duration-300 transform group-hover:scale-105"
                       muted
                       loop
                     />
@@ -149,12 +148,12 @@ const Explore = () => {
                 className="bg-gray-900 p-6 rounded-lg md:w-1/4 w-96 relative shadow-xl"
                 onClick={(e) => e.stopPropagation()} // Prevent closing when interacting inside dialog
               >
-                <h3 className="text-xl font-semibold text-white mb-4">{selectedPost.title}</h3>
-                {selectedPost.video ? (
+                <h3 className="text-xl font-semibold text-white mb-4">{selectedPost?.title}</h3>
+                {selectedPost?.video ? (
                   <div className="relative">
                     <video
-                      src={selectedPost.video}
-                      className="w-full h-[500px] md:h-[600px] md:py-10 object-contain rounded-lg mb-4"
+                      src={selectedPost?.video}
+                      className="w-full h-[500px] md:h-[600px] object-contain rounded-lg mb-4"
                       muted={isMuted}
                       ref={videoRef}
                       onClick={handleVideoPostPlayNPause}
@@ -174,23 +173,17 @@ const Explore = () => {
                   </div>
                 ) : (
                   <img
-                    src={selectedPost.image}
-                    alt={selectedPost.title}
+                    src={selectedPost?.image}
+                    alt={selectedPost?.title}
                     className="w-full h-96 object-cover rounded-lg mb-4"
                   />
                 )}
-                <p className="text-gray-400 mb-4">{selectedPost.description}</p>
+                <p className="text-gray-400 mb-4">{selectedPost?.description}</p>
               </div>
             </div>
           )}
 
-          <button
-            onClick={goToHome}
-            className="fixed bottom-5 right-5 bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition duration-300"
-            title="Go to Home"
-          >
-            🏠
-          </button>
+           
         </div>
       )}
     </>
