@@ -1,6 +1,6 @@
 import React from "react";
 import Posts from "./Posts.jsx";
-import StoriesCarousel from "./StoreisCarousel.jsx";
+import StoriesCarousel from "./StoriesCarousel.jsx";
 
 function Feed() {
   return (
