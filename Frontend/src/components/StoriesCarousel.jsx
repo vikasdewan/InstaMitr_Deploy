@@ -18,7 +18,7 @@ function StoriesCarousel() {
   };
 
   return (
-    <div className="relative w-full max-w-96 md:max-w-3xl mx-auto sm:px-4 mt-3">
+    <div className="relative w-full max-w-80 md:max-w-3xl mx-auto sm:px-4 mt-3">
       {/* Scrollable container */}
       <div
         ref={scrollRef}
