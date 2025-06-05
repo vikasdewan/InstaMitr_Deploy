@@ -24,6 +24,12 @@ function Login() {
   const [webLoading , setWebLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+   const [showDemoBox, setShowDemoBox] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowDemoBox(false), 15000); // 30 seconds
+    return () => clearTimeout(timer);
+  }, []);
 
   const loginHandler = async (e) => {
     e.preventDefault();
