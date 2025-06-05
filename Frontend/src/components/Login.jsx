@@ -27,7 +27,7 @@ function Login() {
    const [showDemoBox, setShowDemoBox] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowDemoBox(false), 15000); // 30 seconds
+    const timer = setTimeout(() => setShowDemoBox(false), 30000); // 30 seconds
     return () => clearTimeout(timer);
   }, []);
 
@@ -197,7 +197,7 @@ function Login() {
               </div>
 
               <p className="text-xs text-right mt-4 text-gray-400 italic">
-                This message will disappear in 15 seconds.
+                This message will disappear in 30 seconds.
               </p>
             </div>
           )}
