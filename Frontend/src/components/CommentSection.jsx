@@ -16,7 +16,7 @@ const CommentSection = ({ postId }) => {
     const fetchComments = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/v1/post/${postId}/comment/all`,
+          `https://instamitr-deploy-1.onrender.com/api/v1/post/${postId}/comment/all`,
           {
             withCredentials: true,
           }
