@@ -8,6 +8,7 @@ import useGetRealTimeMsg from "@/hooks/useGetRealTimeMsg";
 import { updateMessageReaction } from "@/redux/chatSlice";
 import EmojiPicker from "emoji-picker-react";
 import { Smile } from "lucide-react";
+import { APP_BASE_URL } from "@/config.js";
 
 export const Messages = () => {
   useGetRealTimeMsg();
@@ -114,12 +115,16 @@ export const Messages = () => {
               <div className="relative flex  ">
                 {isSender && hoveredMsgId === msg._id && (
                   <button
-                    onClick={() =>
+                    onClick={(e) => {
+                      e.preventDefault(); // stops default button behavior
+                      e.stopPropagation(); // prevents bubbling
+                      document.activeElement?.blur(); // removes any focus
                       setOpenEmojiPickerMsgId(
                         openEmojiPickerMsgId === msg._id ? null : msg._id
-                      )
-                    }
-                    className="text-white opacity-80 hover:opacity-100 mr-2"
+                      );
+                    }}
+                    type="button"
+                    className="text-white opacity-80 hover:opacity-100 ml-2"
                   >
                     <Smile size={18} />
                   </button>
@@ -137,11 +142,15 @@ export const Messages = () => {
 
                 {!isSender && hoveredMsgId === msg._id && (
                   <button
-                    onClick={() =>
+                    onClick={(e) => {
+                      e.preventDefault(); // stops default button behavior
+                      e.stopPropagation(); // prevents bubbling
+                      document.activeElement?.blur(); // removes any focus
                       setOpenEmojiPickerMsgId(
                         openEmojiPickerMsgId === msg._id ? null : msg._id
-                      )
-                    }
+                      );
+                    }}
+                    type="button"
                     className="text-white opacity-80 hover:opacity-100 ml-2"
                   >
                     <Smile size={18} />
@@ -162,6 +171,7 @@ export const Messages = () => {
                       onEmojiClick={(e) => {
                         handleReact(msg._id, e.emoji);
                         setOpenEmojiPickerMsgId(null);
+                        document.activeElement?.blur(); // 👈 blur after selection
                       }}
                     />
                   </div>
