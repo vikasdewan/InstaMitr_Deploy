@@ -113,6 +113,7 @@ export const login = async (req, res) => {
       followers: user.followers,
       following: user.following,
       posts: populatedPosts,
+
     };
 
     return res
@@ -165,6 +166,7 @@ export const getProfile = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server error" });
   }
 };
+
 
 export const editProfile = async (req, res) => {
   try {

@@ -1,40 +1,39 @@
-import {Server} from "socket.io";
+import { Server } from "socket.io";
 import express from "express";
-import http from "http";;
+import http from "http";
 
 const app = express();
-
-const server =  http.createServer(app);
+const server = http.createServer(app);
 
 const io = new Server(server,{
     cors:{
         origin:"https://instamitr-deploy-1.onrender.com",
         methods:['GET' , 'POST']
-    }
-})
+  }
+});
 
-const userSocketMap  = {}; // this map stores socket id corresponding to user id; userId -> socketId
+const userSocketMap = {}; // userId -> socketId
+const activeCalls = {}; // Track active calls: { callId: { participants: [userId1, userId2] } }
 
-export const getRecieverSocketId = (recieverId)=> userSocketMap[recieverId]; //recieverId is key -> corresponding socketId is value
+export const getRecieverSocketId = (receiverId) => userSocketMap[receiverId];
 
-io.on('connection',(socket)=>{
-    const userId = socket.handshake.query.userId;
-    if(userId){
-        userSocketMap[userId] = socket.id;
-        console.log(`User Connected : UserId = ${userId}, SocketId = ${socket.id}`);
-    }
-    
-    io.emit('getOnlineUsers', Object.keys(userSocketMap)) //ye event emit karta hai , jo client side(frontend) par event listener hai,
+io.on("connection", (socket) => {
+  const userId = socket.handshake.query.userId;
+  if (userId) {
+    userSocketMap[userId] = socket.id;
+    console.log(`User Connected: UserId = ${userId}, SocketId = ${socket.id}`);
+  }
+
+  io.emit("getOnlineUsers", Object.keys(userSocketMap)) //ye event emit karta hai , jo client side(frontend) par event listener hai,
 
     socket.on('disconnect',()=>{
-        if(userId){
-            console.log(`User Disconnected :  UserId = ${userId}, SocketId = ${socket.id}`);
-            delete userSocketMap[userId]; //key delete kar rahe hai
-        }
+    if(userId){
+      console.log(`User Disconnected :  UserId = ${userId}, SocketId = ${socket.id}`);
+      delete userSocketMap[userId]; //key delete kar rahe hai
+    }
 
         io.emit('getOnlineUsers' , Object.keys(userSocketMap));
-    })
-})
+  });
+});
 
-
-export {app ,server, io} 
+export { app, server, io };

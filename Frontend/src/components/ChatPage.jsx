@@ -72,7 +72,7 @@ export const ChatPage = () => {
       if (selectedUser) {
         try {
           const res = await axios.get(
-            `https://instamitr-deploy-1.onrender.com/api/v1/message/${selectedUser?._id}`,
+            `https://instamitr-deploy-1.onrender.com/api/v1/message/all/${selectedUser?._id}`,
             { withCredentials: true }
           );
 

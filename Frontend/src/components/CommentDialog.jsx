@@ -192,7 +192,7 @@ const handleEmojiClick = (emojiData) => {
           <div className=" w-full md:w-1/2 flex flex-col justify-between">
             <div className="flex items-center justify-between p-4">
               <div className="flex gap-3 items-center">
-                <Link>
+                <Link to={`/profile/${selectedPost?.author?._id}`}>
                   <Avatar>
                     <AvatarImage src={selectedPost?.author?.profileImage} />
                     <AvatarFallback className="bg-black text-white">
@@ -201,7 +201,9 @@ const handleEmojiClick = (emojiData) => {
                   </Avatar>
                 </Link>
                 <div>
-                  <Link className="font-semibold text-xs hover:text-gray-400">
+                  <Link
+                   to={`/profile/${selectedPost?.author?._id}`}
+                  className="font-semibold text-xs hover:text-gray-400">
                     {selectedPost?.author?.username}
                   </Link>{" "}
                   &nbsp;
