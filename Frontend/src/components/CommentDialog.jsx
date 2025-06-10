@@ -49,7 +49,7 @@ const handleEmojiClick = (emojiData) => {
   const sendMessageHandler = async () => {
     try {
       const res = await axios.post(
-        `https://instamitr-deploy-1.onrender.com/api/v1/post/${selectedPost?._id}/comment`,
+        `https://instamitr.onrender.com/api/v1/post/${selectedPost?._id}/comment`,
         { text },
         {
           headers: {
@@ -93,7 +93,7 @@ const handleEmojiClick = (emojiData) => {
     try {
       // console.log("follow/unfollow button clicked")
       const response = await axios.post(
-        `https://instamitr-deploy-1.onrender.com/api/v1/user/followorunfollow/${selectedPost?.author?._id}`,
+        `https://instamitr.onrender.com/api/v1/user/followorunfollow/${selectedPost?.author?._id}`,
         {}, // No body data required
         {
           withCredentials: true, // Send cookies with the request
@@ -148,7 +148,7 @@ const handleEmojiClick = (emojiData) => {
   const deletePostHandler = async () => {
     try {
       const res = await axios.delete(
-        `https://instamitr-deploy-1.onrender.com/api/v1/post/delete/${post?._id}`,
+        `https://instamitr.onrender.com/api/v1/post/delete/${post?._id}`,
         { withCredentials: true }
       );
       if (res.data.success) {

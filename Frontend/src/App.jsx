@@ -78,7 +78,7 @@ function App() {
 
   useEffect(()=>{
     if(user){
-      const socketio = io('https://instamitr-deploy-1.onrender.com' , {
+      const socketio = io('https://instamitr.onrender.com' , {
         query:{
           userId:user?._id
         },

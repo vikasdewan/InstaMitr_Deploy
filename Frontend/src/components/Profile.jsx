@@ -72,7 +72,7 @@ function Profile() {
     try {
       // console.log("follow/unfollow button clicked")
       const response = await axios.post(
-        `https://instamitr-deploy-1.onrender.com/api/v1/user/followorunfollow/${userProfile?._id}`,
+        `https://instamitr.onrender.com/api/v1/user/followorunfollow/${userProfile?._id}`,
         {}, // No body data required
         {
           withCredentials: true, // Send cookies with the request

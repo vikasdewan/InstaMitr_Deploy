@@ -39,7 +39,7 @@ export const Messages = () => {
   const handleReact = async (messageId, emoji) => {
     try {
       const res = await fetch(
-        `https://instamitr-deploy-1.onrender.com/api/v1/message/react/${messageId}`,
+        `https://instamitr.onrender.com/api/v1/message/react/${messageId}`,
         {
           method: "POST",
           credentials: "include",

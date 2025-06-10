@@ -44,7 +44,7 @@ function CreatePost({ open, setOpen }) {
         try {
           setLoading(true);
           const res = await axios.post(
-            "https://instamitr-deploy-1.onrender.com/api/v1/post/addpost/image", // Image API endpoint
+            "https://instamitr.onrender.com/api/v1/post/addpost/image", // Image API endpoint
             formData,
             {
               headers: {
@@ -76,7 +76,7 @@ function CreatePost({ open, setOpen }) {
         try {
           setLoading(true);
           const res = await axios.post(
-            "https://instamitr-deploy-1.onrender.com/api/v1/post/addpost/video", // Video API endpoint
+            "https://instamitr.onrender.com/api/v1/post/addpost/video", // Video API endpoint
             formData,
             {
               headers: {

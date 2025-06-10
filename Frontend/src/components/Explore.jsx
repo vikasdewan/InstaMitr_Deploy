@@ -32,7 +32,7 @@ const Explore = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          "https://instamitr-deploy-1.onrender.com/api/v1/post/all",
+          "https://instamitr.onrender.com/api/v1/post/all",
           {
             withCredentials: true,
           }

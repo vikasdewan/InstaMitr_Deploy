@@ -32,7 +32,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(urlencoded({ extended: true }));
 const allowedOrigins = [
-  "https://instamitr-deploy-1.onrender.com",
+  "https://instamitr.onrender.com",
 ];
 
 const corsOptions = {

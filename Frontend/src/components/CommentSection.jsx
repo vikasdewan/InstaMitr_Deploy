@@ -29,7 +29,7 @@ const CommentSection = ({ postId }) => {
     const fetchComments = async () => {
       try {
         const res = await axios.get(
-          `https://instamitr-deploy-1.onrender.com/api/v1/post/${postId}/comment/all`,
+          `https://instamitr.onrender.com/api/v1/post/${postId}/comment/all`,
           {
             withCredentials: true,
           }
@@ -48,7 +48,7 @@ const CommentSection = ({ postId }) => {
     if (!input.trim()) return;
     try {
       const res = await axios.post(
-        `https://instamitr-deploy-1.onrender.com/api/v1/post/${postId}/comment`,
+        `https://instamitr.onrender.com/api/v1/post/${postId}/comment`,
         { text: input },
         {
           headers: { "Content-Type": "application/json" },
