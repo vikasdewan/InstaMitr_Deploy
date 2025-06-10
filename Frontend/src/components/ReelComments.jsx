@@ -9,6 +9,7 @@ import { setPosts } from "@/redux/postSlice";
 import { toast } from "sonner";
 import EmojiPicker from "emoji-picker-react";
 import { Smile } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ReelComments = ({ reel, onClose, user }) => {
   const [comments, setComments] = useState(reel?.comments || []);
@@ -106,15 +107,19 @@ const ReelComments = ({ reel, onClose, user }) => {
           ) : (
             comments.map((comment) => (
               <div key={comment._id} className="flex items-start space-x-3">
+                <Link to={`/profile/${comment?.author?._id}`} >
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={comment.author?.profileImage} />
                   <AvatarFallback>U</AvatarFallback>
                 </Avatar>
+                </Link>
                 <div className="flex-1">
                   <div className="bg-gray-800 rounded-lg p-3">
+                     <Link  to={`/profile/${comment?.author?._id}`} >
                     <p className="font-semibold text-white">
                       {comment.author?.username}
                     </p>
+                    </Link>
                     <p className="text-white">{comment.text}</p>
                   </div>
                   <p className="text-gray-400 text-xs mt-1">
