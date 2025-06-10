@@ -487,7 +487,11 @@ function Post({ post }) {
 
         {showEmojiPicker && (
           <div className="absolute bottom-[40px] right-0 z-50">
-            <EmojiPicker onEmojiClick={handleEmojiClick} theme="dark" />
+            <EmojiPicker
+            searchDisabled
+                      skinTonesDisabled
+                      previewConfig={{ showPreview: false }}
+            onEmojiClick={handleEmojiClick} theme="dark" />
           </div>
         )}
       </div>

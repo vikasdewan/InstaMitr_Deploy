@@ -150,6 +150,9 @@ const CommentSection = ({ postId }) => {
       <div className="relative">
         <div className="absolute bottom-[4.5rem] right-2 z-50">
           <EmojiPicker
+          searchDisabled
+                      skinTonesDisabled
+                      previewConfig={{ showPreview: false }}
             onEmojiClick={handleEmojiClick}
             theme="dark"
             width={300}

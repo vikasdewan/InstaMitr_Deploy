@@ -159,6 +159,9 @@ export const Messages = () => {
                       theme="dark"
                       height={350}
                       width={300}
+                      searchDisabled
+                      skinTonesDisabled
+                      previewConfig={{ showPreview: false }}
                       onEmojiClick={(e) => {
                         handleReact(msg._id, e.emoji);
                         setOpenEmojiPickerMsgId(null);

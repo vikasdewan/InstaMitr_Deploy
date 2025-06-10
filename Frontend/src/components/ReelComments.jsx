@@ -157,6 +157,9 @@ const ReelComments = ({ reel, onClose, user }) => {
             {showEmojiPicker && (
               <div className="absolute bottom-14 left-0 z-50">
                 <EmojiPicker
+                searchDisabled
+                      skinTonesDisabled
+                      previewConfig={{ showPreview: false }}
                   onEmojiClick={handleEmojiClick}
                   theme="dark"
                   width={300}

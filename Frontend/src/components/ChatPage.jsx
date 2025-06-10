@@ -185,6 +185,9 @@ export const ChatPage = () => {
             {showEmojiPicker && (
               <div className="absolute bottom-16 z-50">
                 <EmojiPicker
+                  searchDisabled
+                      skinTonesDisabled
+                      previewConfig={{ showPreview: false }}
                   onEmojiClick={(emojiData) => {
                     setTextMessage((prev) => prev + emojiData.emoji);
                     setShowEmojiPicker(false);

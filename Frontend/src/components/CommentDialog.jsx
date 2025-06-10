@@ -283,7 +283,11 @@ const handleEmojiClick = (emojiData) => {
 
   {showEmojiPicker && (
     <div className="absolute bottom-[60px] left-2 z-50">
-      <EmojiPicker onEmojiClick={handleEmojiClick} theme="dark" />
+      <EmojiPicker
+      searchDisabled
+                      skinTonesDisabled
+                      previewConfig={{ showPreview: false }}
+      onEmojiClick={handleEmojiClick} theme="dark" />
     </div>
   )}
 </div>
