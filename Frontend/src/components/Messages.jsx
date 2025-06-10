@@ -152,7 +152,7 @@ export const Messages = () => {
                 {openEmojiPickerMsgId === msg._id && (
                   <div
                     className={`absolute z-50 -top-40 ${
-                      isSender ? "right-20 md:right-40" : "md:left-40 left-20 "
+                      isSender ? "right-12 md:right-40" : "md:left-40 left-12 "
                     }`}
                   >
                     <EmojiPicker
