@@ -1,7 +1,7 @@
 import BottomBar from "./BottomBar.jsx";
 import LeftSideBar from "./LeftSideBar";
 import RightSideBar from "./RightSideBar";
-import RightSideBarModal from "./RightSideBarModel";
+import RightSideBarModal from "./RightSideBarModal";
 
 export {
     BottomBar,
