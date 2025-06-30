@@ -6,7 +6,7 @@ import {SuggestedUsers} from "../common/index.js";
 import { X } from "lucide-react";
  
 
-function RightSideBarModal({ isOpen, onClose }) {
+function RightSideBarModel({ isOpen, onClose }) {
   const { user } = useSelector((store) => store.auth);
 
   if (!isOpen) return null;
@@ -45,4 +45,4 @@ function RightSideBarModal({ isOpen, onClose }) {
   );
 }
 
-export default RightSideBarModal;
+export default RightSideBarModel;
