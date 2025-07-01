@@ -8,37 +8,44 @@ import { getRecieverSocketId, io } from "../socket/socket.js";
 export const addNewImagePost = async (req, res) => {
   try {
     const { caption } = req.body;
-    const image = req.file;
+    const images = req.files;
     const authorId = req.id;
 
-    if (!image) {
+    if (!images || images.length === 0) {
       return res.status(400).json({
-        message: "Image Required",
-        status: false,
+        message: "At least one image is required.",
+        success: false,
       });
     }
 
-    //image upload
-    const optimizeImageBuffer = await sharp(image.buffer)
-      .resize({ width: 800, height: 800, fit: "inside" })
-      .toFormat("jpeg", { quality: 80 })
-      .toBuffer();
+    if (images.length > 3) {
+      return res.status(400).json({
+        message: "You can upload a maximum of 3 images.",
+        success: false,
+      });
+    }
 
-    //buffer to Data Uri
-    const flieUri = `data:image/jpeg;base64,${optimizeImageBuffer.toString(
-      "base64"
-    )}`;
+    const imageUrls = [];
 
-    const cloudResponse = await cloudinary.uploader.upload(flieUri);
+    for (const file of images) {
+      const optimizedBuffer = await sharp(file.buffer)
+        .resize({ width: 800, height: 800, fit: "inside" })
+        .toFormat("jpeg", { quality: 80 })
+        .toBuffer();
+
+      const fileUri = `data:image/jpeg;base64,${optimizedBuffer.toString("base64")}`;
+
+      const cloudRes = await cloudinary.uploader.upload(fileUri);
+      imageUrls.push(cloudRes.secure_url);
+    }
 
     const post = await Post.create({
       caption,
-      image: cloudResponse.secure_url,
+      images: imageUrls,
       author: authorId,
     });
 
     const user = await User.findById(authorId);
-
     if (user) {
       user.posts.push(post._id);
       await user.save();
@@ -47,15 +54,18 @@ export const addNewImagePost = async (req, res) => {
     await post.populate({ path: "author", select: "-password" });
 
     return res.status(201).json({
-      message: "New Post Added",
+      message: "New Post with multiple images added",
       post,
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    console.log("Error adding new image post:", error);
+    return res.status(500).json({
+      message: "Server Error",
+      success: false,
+    });
   }
 };
-
 // Add video post
 export const addNewVideoPost = async (req, res) => {
   try {

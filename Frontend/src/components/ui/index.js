@@ -18,7 +18,13 @@ import { Label } from "./label.jsx";
 import { Popover, PopoverTrigger, PopoverContent } from "./popover.jsx";
 import { Toaster } from "./sonner.jsx";
 import { Textarea } from "./textarea.jsx";
-
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "./carousel.jsx";
 export {
   Avatar,
   Badge,
@@ -44,4 +50,9 @@ export {
   buttonVariants,
   PopoverTrigger,
   PopoverContent,
+   Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
 };

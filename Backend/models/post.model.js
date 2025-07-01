@@ -1,14 +1,24 @@
 import mongoose from "mongoose";
-import { type } from "os";
 
 const postSchema = new mongoose.Schema({
   caption: {
     type: String,
     default: "",
   },
-  image: {
-    type: String,
+
+  // Support for multiple images (up to 3)
+  images: {
+    type: [String], // Array of image URLs
+    validate: {
+      validator: function (value) {
+        return value.length <= 3;
+      },
+      message: "You can upload a maximum of 3 images.",
+    },
+    default: [],
   },
+
+  // Optional: Still support video (if any)
   video: {
     type: String,
   },
@@ -32,6 +42,9 @@ const postSchema = new mongoose.Schema({
       ref: "Comment",
     },
   ],
+},
+{
+  timestamps: true
 });
 
 export const Post = mongoose.model("Post", postSchema);
