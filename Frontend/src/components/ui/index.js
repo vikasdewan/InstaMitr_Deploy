@@ -25,6 +25,20 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "./carousel.jsx";
+
+import {
+  Sheet,
+  SheetPortal,
+  SheetOverlay,
+  SheetTrigger,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetFooter,
+  SheetTitle,
+  SheetDescription,
+} from "./sheet.jsx"
+
 export {
   Avatar,
   Badge,
@@ -50,9 +64,19 @@ export {
   buttonVariants,
   PopoverTrigger,
   PopoverContent,
-   Carousel,
+  Carousel,
   CarouselContent,
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  Sheet,
+  SheetPortal,
+  SheetOverlay,
+  SheetTrigger,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetFooter,
+  SheetTitle,
+  SheetDescription,
 };

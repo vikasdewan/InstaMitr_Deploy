@@ -8,7 +8,6 @@ import {
   EditProfile,
   ChatPage,
   ProtectedRoutes,
-  SearchTab,
   SuggestedUsersPage,
   Reels,
   Explore,
@@ -47,10 +46,6 @@ const browserRouter = createBrowserRouter([
       {
         path: "/chat",
         element: <ProtectedRoutes><ChatPage/></ProtectedRoutes> ,
-      },
-      {
-        path: "/search",
-        element: <ProtectedRoutes><SearchTab/></ProtectedRoutes> ,
       },
       {
         path: "/suggestedusers",
