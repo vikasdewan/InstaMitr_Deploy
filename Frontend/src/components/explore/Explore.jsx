@@ -170,10 +170,6 @@ const Explore = () => {
                     >
                       {/* Post Section */}
                       <div className="flex-1 p-4 md:p-6">
-                        <h3 className="text-xl font-semibold text-white mb-4">
-                          {selectedPost?.caption}  
-                        </h3>
-          
                         {selectedPost?.video ? (
                           <div className="relative">
                             <video
@@ -227,7 +223,7 @@ const Explore = () => {
                           />
                         ) : null}
           
-                        <p className="text-gray-400 mb-2">{selectedPost?.description}</p>
+                        <p className="text-gray-400 mb-2">{selectedPost?.caption}</p>
                       </div>
           
                       {/* Comment Section (hidden on mobile) */}
