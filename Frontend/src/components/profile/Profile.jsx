@@ -441,7 +441,7 @@ function Profile() {
                     <img
                       src={selectedPost.image || selectedPost.images[0]}
                       alt={selectedPost?.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   ) : null}
                 </div>
