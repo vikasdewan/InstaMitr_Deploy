@@ -161,18 +161,16 @@ const Explore = () => {
 
           {/* Modal Dialog for Post Details */}
           {openPostDialog && selectedPost && (
-            
             <div
               className="fixed inset-0 bg-transparent bg-opacity-80 flex justify-center items-center z-50"
               onClick={closeDialog}
             >
-              cross
               <div
-                className="bg-black shadow-xl w-[56vw] h-[90vh] max-w-6xl flex flex-col md:flex-row   overflow-hidden"
+                className="bg-black shadow-xl md:w-[56vw] w-[90vw] md:h-[90vh] h-[70vh] max-w-6xl flex flex-col md:flex-row overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Left: Media Section */}
-                <div className="flex-1 h-full w-[10vw] relative">
+                <div className="flex-1 w-full h-[50vh] md:h-full relative">
                   {selectedPost?.video ? (
                     <div className="w-full h-full relative">
                       <video
@@ -220,12 +218,12 @@ const Explore = () => {
                     <img
                       src={selectedPost.image || selectedPost.images[0]}
                       alt={selectedPost?.title}
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-cover"
                     />
                   ) : null}
                 </div>
 
-                {/* Right: Comments */}
+                {/* Right: Comments Section (hidden on small screens) */}
                 <div className="hidden md:flex md:w-[500px] bg-black border-l border-gray-700 flex-col h-full p-4 overflow-y-auto">
                   <CommentSection postId={selectedPost?._id} />
                 </div>
