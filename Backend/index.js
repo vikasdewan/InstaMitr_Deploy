@@ -7,7 +7,7 @@ import connectDB from "./utils/db.js";
 import userRoute from "./routes/user.route.js";
 import postRoute from "./routes/post.route.js";
 import messageRoute from "./routes/message.route.js";
-import reelRoute from "./routes/reel.route.js";
+import reelRoute from "./routes/reels.route.js";
 import { app, server } from "./socket/socket.js";
 import path from "path";
 import passport from "./config/passport.js";
