@@ -1,4 +1,4 @@
-import { Login, Signup } from "./auth/index.js";
+import { Login, Signup , ResetPassword } from "./auth/index.js";
 import { ChatPage, Messages } from "./chat/index.js";
 import {
   CommentSection,
@@ -7,6 +7,7 @@ import {
   MainLayout,
   ProtectedRoutes,
   SearchTab,
+ 
   SuggestedUsers,
   SuggestedUsersPage,
 } from "./common/index.js";
@@ -37,6 +38,7 @@ import { ReelComments, Reels } from "./reels/index.js";
 export {
   Login,
   Signup,
+  ResetPassword,
   ChatPage,
   Messages,
   CommentSection,
@@ -45,6 +47,7 @@ export {
   MainLayout,
   ProtectedRoutes,
   SearchTab,
+ 
   SuggestedUsers,
   SuggestedUsersPage,
   Explore,

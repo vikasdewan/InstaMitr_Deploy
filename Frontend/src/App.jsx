@@ -2,12 +2,14 @@ import "./App.css";
 import {
   Login,
   Signup,
+  ResetPassword,
   Home,
   Profile,
   MainLayout,
   EditProfile,
   ChatPage,
   ProtectedRoutes,
+ 
   SuggestedUsersPage,
   Reels,
   Explore,
@@ -22,6 +24,7 @@ import {
   setlikeNotiList
 } from "@/redux/index.js"
 import { APP_BASE_URL } from "./config";
+ 
  
 
   
@@ -70,6 +73,10 @@ const browserRouter = createBrowserRouter([
     path: "/signup",
     element: <Signup />,
   },
+  {
+    path:"/reset-password/:token",
+    element:<ResetPassword/>
+  }
    
  
   
