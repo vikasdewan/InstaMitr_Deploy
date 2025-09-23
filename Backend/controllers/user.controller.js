@@ -199,7 +199,7 @@ export const googleAuthCallback = async (req, res) => {
         sameSite: "strict",
         maxAge: 5 * 24 * 60 * 60 * 1000,
       })
-      .redirect("http://localhost:5173"); // frontend homepage
+      .redirect("https://instamitr.onrender.com"); // frontend homepage
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
