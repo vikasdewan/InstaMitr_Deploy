@@ -47,10 +47,10 @@ app.use("/api/v1/message", messageRoute);
 app.use("/api/v1/reels", reelRoute);
 
 // Production static files (optional)
-// app.use(express.static(path.join(__dirname, "Frontend", "dist")));
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "Frontend", "dist", "index.html"));
-// });
+app.use(express.static(path.join(__dirname, "Frontend", "dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "Frontend", "dist", "index.html"));
+});
 
 // Connect DB and start server
 connectDB()
