@@ -34,7 +34,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://instamitr.onrender.com",
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
 };
