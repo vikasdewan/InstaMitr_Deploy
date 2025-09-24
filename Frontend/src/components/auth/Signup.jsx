@@ -26,27 +26,33 @@ function Signup() {
   };
 
   const signupHandler = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      const res = await axios.post(
-        `${APP_BASE_URL}/api/v1/user/register`,
-        input,
-        { headers: { "Content-Type": "application/json" }, withCredentials: true }
-      );
+  e.preventDefault();
+  try {
+    setLoading(true);
+    const res = await axios.post(
+      `${APP_BASE_URL}/api/v1/user/register`,
+      input,
+      { headers: { "Content-Type": "application/json" }, withCredentials: true }
+    );
 
-      if (res.data.success) {
-        toast.success(res.data.message);
-        setUserId(res.data.userId);
-        setShowOtpDialog(true);
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Signup failed");
-      setInput({ username: "", password: "", email: "" });
-    } finally {
-      setLoading(false);
+    if (res.data.success) {
+      toast.success(res.data.message);
+      setUserId(res.data.userId);
+      setShowOtpDialog(true);
     }
-  };
+  } catch (error) {
+    const msg = error.response?.data?.message || "Signup failed";
+    toast.error(msg);
+
+    // Only clear form if it's truly invalid (not just unverified user)
+    if (!msg.includes("not verified")) {
+      setInput({ username: "", password: "", email: "" });
+    }
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const verifyOtpHandler = async () => {
     if (!otp) return toast.error("Please enter OTP");

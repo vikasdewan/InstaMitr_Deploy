@@ -9,7 +9,7 @@ import crypto from "crypto";
 import nodemailer from "nodemailer";
 import {verifyOTP, generateAndSendOTP } from "../utils/otp.utils.js";
 
-export const  register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
@@ -20,35 +20,58 @@ export const  register = async (req, res) => {
       });
     }
 
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    let existingUser = await User.findOne({ $or: [{ email }, { username }] });
+
     if (existingUser) {
+      if (!existingUser.otpVerified) {
+        // Resend OTP for unverified user
+        const otpResult = await generateAndSendOTP(existingUser._id);
+
+        if (!otpResult.success) {
+          return res
+            .status(500)
+            .json({ message: otpResult.message, success: false });
+        }
+
+        return res.status(200).json({
+          message:
+            "User already exists but is not verified. A new OTP has been sent.",
+          success: true,
+          userId: existingUser._id,
+        });
+      }
+
+      // If already verified
       return res.status(400).json({
         message: "User already exists with this email or username",
         success: false,
       });
     }
 
+    // Create fresh user
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
       username,
       email,
       password: hashedPassword,
-      isVerified: false,
+      otpVerified: false,
     });
 
-    // send OTP
+    // Send OTP
     const otpResult = await generateAndSendOTP(newUser._id);
 
     if (!otpResult.success) {
-      return res.status(500).json({ message: otpResult.message, success: false });
+      return res
+        .status(500)
+        .json({ message: otpResult.message, success: false });
     }
 
     return res.status(201).json({
       message:
         "User registered successfully. Please verify your account with the OTP sent to your email.",
       success: true,
-      userId: newUser._id, // frontend will need this to verify otp
+      userId: newUser._id,
     });
   } catch (error) {
     console.error("Error during registration:", error);
@@ -192,6 +215,8 @@ export const googleAuthCallback = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
       expiresIn: "5d",
     });
+
+      await User.findByIdAndUpdate(user._id,{otpVerified:true});
 
     res
       .cookie("token", token, {
