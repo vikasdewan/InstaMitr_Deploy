@@ -527,10 +527,10 @@ export const forgotPassword = async (req, res) => {
     });
 
     res.status(200).json({ success: true, message: "Reset password email sent" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Server error" });
-  }
+  }  catch (error) {
+  console.error("Forgot password error:", error.message);
+  res.status(500).json({ success: false, message: error.message });
+}
 };
 
 export const resetPassword = async (req, res) => {
