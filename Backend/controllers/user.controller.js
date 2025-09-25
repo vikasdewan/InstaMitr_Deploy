@@ -514,7 +514,7 @@ export const forgotPassword = async (req, res) => {
     console.log("📧 Sending reset email via Resend to:", user.email);
 
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: process.env.EMAIL_FROM,
       to: user.email,
       subject: "Reset Your Password",
       html: `
