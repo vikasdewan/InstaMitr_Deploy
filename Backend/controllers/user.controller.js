@@ -8,10 +8,6 @@ import { populate } from "dotenv";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 import {verifyOTP, generateAndSendOTP } from "../utils/otp.utils.js";
-import { Resend } from "resend";
-
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const register = async (req, res) => {
   try {
@@ -509,29 +505,31 @@ export const forgotPassword = async (req, res) => {
     user.resetPasswordExpires = Date.now() + 15 * 60 * 1000; // 15 minutes
     await user.save();
 
-    const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
-
-    console.log("📧 Sending reset email via Resend to:", user.email);
-
-    await resend.emails.send({
-      from: process.env.EMAIL_FROM,
-      to: user.email,
-      subject: "Reset Your Password",
-      html: `
-        <p>You requested a password reset.</p>
-        <p>Click <a href="${resetLink}">here</a> to reset your password. This link will expire in 15 minutes.</p>
-      `,
+    // Send Email
+    const transporter = nodemailer.createTransport({
+      service: "Gmail", // or any SMTP service
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
     });
 
-    console.log("✅ Email sent successfully via Resend!");
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: user.email,
+      subject: "Reset Your Password",
+      html: `<p>You requested a password reset.</p>
+             <p>Click <a href="${resetLink}">here</a> to reset your password. This link will expire in 15 minutes.</p>`,
+    });
 
     res.status(200).json({ success: true, message: "Reset password email sent" });
   } catch (error) {
-    console.error("❌ Forgot password error:", error);
-    res.status(500).json({ success: false, message: error.message || "Server error" });
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
-
 
 export const resetPassword = async (req, res) => {
   try {

@@ -57,44 +57,34 @@ function Login() {
   };
 
   //  Forgot Password handler
- const sendResetPasswordLink = async (e) => {
-  e.preventDefault();
-  if (!resetEmail) {
-    toast.error("Please enter your email");
-    return;
-  }
-
-  try {
-    setSending(true);
-    console.log("📩 Forgot Password request starting...");
-    console.log("👉 API URL:", `${APP_BASE_URL}/api/v1/user/forgot-password`);
-    console.log("👉 Email entered:", resetEmail);
-
-    const res = await axios.post(
-      `${APP_BASE_URL}/api/v1/user/forgot-password`,
-      { email: resetEmail },
-      { withCredentials: true }
-    );
-
-    console.log("✅ Forgot Password response:", res);
-
-    if (res.data.success) {
-      toast.success(res.data.message);
-      setOpenDialog(false);
-      setResetEmail("");
-    } else {
-      console.warn("⚠️ Forgot Password API returned error:", res.data);
-      toast.error(res.data.message || "Failed to send reset link");
+  const sendResetPasswordLink = async (e) => {
+    e.preventDefault();
+    if (!resetEmail) {
+      toast.error("Please enter your email");
+      return;
     }
-  } catch (error) {
-    console.error("❌ Forgot Password request failed:", error);
-    console.error("❌ Error details:", error.response?.data || error.message);
-    toast.error(error.response?.data?.message || "Something went wrong");
-  } finally {
-    setSending(false);
-    console.log("🔚 Forgot Password request finished");
-  }
-};
+
+    try {
+      setSending(true);
+      const res = await axios.post(
+        `${APP_BASE_URL}/api/v1/user/forgot-password`,
+        { email: resetEmail },
+        { withCredentials: true }
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.message);
+        setOpenDialog(false);
+        setResetEmail("");
+      } else {
+        toast.error(res.data.message || "Failed to send reset link");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+    } finally {
+      setSending(false);
+    }
+  };
 
   //google login
   useEffect(() => {
