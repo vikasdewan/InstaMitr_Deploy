@@ -8,6 +8,10 @@ import { populate } from "dotenv";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 import {verifyOTP, generateAndSendOTP } from "../utils/otp.utils.js";
+import { Resend } from "resend";
+
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const register = async (req, res) => {
   try {
@@ -494,57 +498,34 @@ export const changePassword = async (req, res) => {
 export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    console.log("📩 Forgot password request for:", email);
-
-    if (!email) {
-      console.warn("⚠️ No email provided");
-      return res.status(400).json({ success: false, message: "Email is required" });
-    }
+    if (!email) return res.status(400).json({ success: false, message: "Email is required" });
 
     const user = await User.findOne({ email });
-    if (!user) {
-      console.warn("⚠️ User not found:", email);
-      return res.status(404).json({ success: false, message: "User not found" });
-    }
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
     // Generate token
     const token = crypto.randomBytes(32).toString("hex");
-    console.log("✅ Generated reset token:", token);
-
     user.resetPasswordToken = token;
     user.resetPasswordExpires = Date.now() + 15 * 60 * 1000; // 15 minutes
     await user.save();
-    console.log("💾 Saved reset token in DB for user:", user.email);
-
-    // Nodemailer config
-    console.log("📨 Setting up nodemailer with user:", process.env.EMAIL_USER);
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
 
     const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
-    console.log("🔗 Reset link:", resetLink);
 
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
+    console.log("📧 Sending reset email via Resend to:", user.email);
+
+    await resend.emails.send({
+      from: process.env.EMAIL_FROM,
       to: user.email,
       subject: "Reset Your Password",
-      html: `<p>You requested a password reset.</p>
-             <p>Click <a href="${resetLink}">here</a> to reset your password. This link will expire in 15 minutes.</p>`,
-    };
+      html: `
+        <p>You requested a password reset.</p>
+        <p>Click <a href="${resetLink}">here</a> to reset your password. This link will expire in 15 minutes.</p>
+      `,
+    });
 
-    console.log("📧 Sending email to:", user.email);
-    await transporter.sendMail(mailOptions);
-    console.log("✅ Email sent successfully!");
+    console.log("✅ Email sent successfully via Resend!");
 
     res.status(200).json({ success: true, message: "Reset password email sent" });
-
   } catch (error) {
     console.error("❌ Forgot password error:", error);
     res.status(500).json({ success: false, message: error.message || "Server error" });
