@@ -16,6 +16,7 @@ export const addNewImagePost = async (req, res) => {
         message: "At least one image is required.",
         success: false,
       });
+
     }
 
     if (images.length > 3) {
