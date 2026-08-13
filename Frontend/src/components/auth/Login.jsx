@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dialog";
 
 function Login() {
-  const [input, setInput] = useState({ email: "", password: "" });
+  const [input, setInput] = useState({ email: "vikas@gmail.com", password: "1234" });
   const [loading, setloading] = useState(false);
   const [webLoading, setWebLoading] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -165,6 +165,9 @@ function Login() {
                   <Eye className="w-5 h-5" />
                 )}
               </button>
+              <div className="flex justify-center pt-2 text-lg">
+              <p className="text-white ">Details are filled, just click login </p>
+              </div>
             </div>
 
             <Button
